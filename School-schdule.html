@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التواصل التعليمي - جدول الحصص الأسبوعية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hover-scale {
+            transition: transform 0.2s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg border-b-4 border-blue-500">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="bg-blue-500 text-white p-3 rounded-full">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">متوسطة أبها الأهلية</h1>
+                        <p class="text-gray-600">منصة التواصل التعليمي - جدول الحصص الأسبوعية</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <select id="userRole" class="bg-white border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none">
+                        <option value="parent">ولي أمر</option>
+                        <option value="teacher">معلم</option>
+                    </select>
+                    
+                    <select id="gradeSelect" class="bg-white border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none ml-2">
+                        <option value="1">الأول متوسط</option>
+                        <option value="2">الثاني متوسط</option>
+                        <option value="3">الثالث متوسط</option>
+                    </select>
+                    
+                    <select id="sectionSelect" class="bg-white border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none">
+                        <option value="أ">شعبة أ</option>
+                        <option value="ب">شعبة ب</option>
+                        <option value="ج">شعبة ج</option>
+                        <option value="د">شعبة د</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Teacher Login Modal -->
+    <div id="teacherLoginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4">
+            <div class="p-6 border-b border-gray-200">
+                <h3 class="text-xl font-bold text-gray-800 text-center">تسجيل دخول المعلم</h3>
+            </div>
+            
+            <div class="p-6">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">كلمة المرور</label>
+                        <input type="password" id="teacherPassword" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="أدخل كلمة مرور المعلم">
+                        <div id="passwordError" class="text-red-500 text-sm mt-1 hidden">كلمة المرور غير صحيحة</div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-4 space-x-reverse mt-6">
+                    <button id="cancelLogin" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors">إلغاء</button>
+                    <button id="confirmLogin" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">تسجيل الدخول</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Week Navigation -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 fade-in">
+            <div class="flex justify-between items-center">
+                <button id="prevWeek" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors">
+                    الأسبوع السابق
+                </button>
+                
+                <div class="text-center">
+                    <h2 id="currentWeek" class="text-xl font-bold text-gray-800">الأسبوع الحالي</h2>
+                    <p id="weekDates" class="text-gray-600">1 - 5 ربيع الأول 1447هـ</p>
+                </div>
+                
+                <button id="nextWeek" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
+                    الأسبوع التالي
+                </button>
+            </div>
+        </div>
+
+        <!-- Schedule Table -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden fade-in">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+                        <tr>
+                            <th class="px-6 py-4 text-right font-semibold">الحصة</th>
+                            <th class="px-6 py-4 text-center font-semibold">الأحد</th>
+                            <th class="px-6 py-4 text-center font-semibold">الاثنين</th>
+                            <th class="px-6 py-4 text-center font-semibold">الثلاثاء</th>
+                            <th class="px-6 py-4 text-center font-semibold">الأربعاء</th>
+                            <th class="px-6 py-4 text-center font-semibold">الخميس</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scheduleBody">
+                        <!-- Schedule rows will be generated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div class="bg-white rounded-xl shadow-lg p-6 hover-scale fade-in">
+                <div class="flex items-center">
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="mr-4">
+                        <h3 class="text-lg font-semibold text-gray-800">الحصص المكتملة</h3>
+                        <p class="text-3xl font-bold text-green-600" id="completedLessons">18</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 hover-scale fade-in">
+                <div class="flex items-center">
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="mr-4">
+                        <h3 class="text-lg font-semibold text-gray-800">الحصص المعلقة</h3>
+                        <p class="text-3xl font-bold text-yellow-600" id="pendingLessons">3</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 hover-scale fade-in">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <div class="mr-4">
+                        <h3 class="text-lg font-semibold text-gray-800">إجمالي المواد</h3>
+                        <p class="text-3xl font-bold text-blue-600" id="totalSubjects">7</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-300">تصميم وتطوير: أ. طارق أبوعشي</p>
+            <p class="text-gray-400 text-sm mt-2">متوسطة أبها الأهلية © 2025</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Lesson Details -->
+    <div id="lessonModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex justify-between items-center">
+                    <h3 id="modalTitle" class="text-xl font-bold text-gray-800"></h3>
+                    <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <div id="teacherView" class="hidden">
+                    <div class="space-y-4">
+                        <div id="subjectNameField" class="hidden">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">اسم المادة</label>
+                            <input type="text" id="subjectName" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="أدخل اسم المادة">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">عنوان الحصة</label>
+                            <input type="text" id="lessonTitle" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="أدخل عنوان الحصة">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">محتوى الحصة</label>
+                            <textarea id="lessonContent" rows="4" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="اكتب تفاصيل ما تم تدريسه في هذه الحصة"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">الواجبات المنزلية</label>
+                            <textarea id="homework" rows="3" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="الواجبات المطلوبة من الطلاب"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">ملاحظات إضافية</label>
+                            <textarea id="notes" rows="2" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="أي ملاحظات أو تنبيهات لأولياء الأمور"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-4 space-x-reverse mt-6">
+                        <button id="cancelEdit" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors">إلغاء</button>
+                        <button id="saveLesson" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">حفظ الحصة</button>
+                    </div>
+                </div>
+                
+                <div id="parentView">
+                    <div id="lessonDetails" class="space-y-4">
+                        <!-- Lesson details will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for middle school grades and sections
+        const scheduleData = {
+            '1': { // الأول متوسط
+                'أ': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                },
+                'ب': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                },
+                'ج': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                },
+                'د': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                }
+            },
+            '2': { // الثاني متوسط
+                'أ': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                },
+                'ب': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                },
+                'ج': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                },
+                'د': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                }
+            },
+            '3': { // الثالث متوسط
+                'أ': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                },
+                'ب': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                },
+                'ج': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                },
+                'د': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية'],
+                    schedule: {
+                        'sunday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'monday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'tuesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'wednesday': ['', '', '', '', '', 'فسحة', '', ''],
+                        'thursday': ['', '', '', '', '', 'فسحة', '', '']
+                    },
+                    lessons: {}
+                }
+            }
+        };
+
+        // Initialize lessons data for all grades and sections
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday'];
+        const periods = ['1', '2', '3', '4', '5', '6', '7', '8'];
+        
+        Object.keys(scheduleData).forEach(grade => {
+            Object.keys(scheduleData[grade]).forEach(section => {
+                days.forEach(day => {
+                    scheduleData[grade][section].lessons[day] = {};
+                    periods.forEach(period => {
+                        scheduleData[grade][section].lessons[day][period] = {
+                            title: '',
+                            content: '',
+                            homework: '',
+                            notes: '',
+                            completed: false // All lessons start empty
+                        };
+                    });
+                });
+            });
+        });
+
+        // All lessons start empty - teachers will fill them
+
+        let currentGrade = '1';
+        let currentSection = 'أ';
+        let currentRole = 'parent';
+        let currentWeek = 0;
+        let isTeacherAuthenticated = false;
+        const TEACHER_PASSWORD = 'ابها الاهلية2025';
+
+        // DOM elements
+        const userRoleSelect = document.getElementById('userRole');
+        const gradeSelect = document.getElementById('gradeSelect');
+        const sectionSelect = document.getElementById('sectionSelect');
+        const scheduleBody = document.getElementById('scheduleBody');
+        const lessonModal = document.getElementById('lessonModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const teacherView = document.getElementById('teacherView');
+        const parentView = document.getElementById('parentView');
+        const lessonDetails = document.getElementById('lessonDetails');
+        const teacherLoginModal = document.getElementById('teacherLoginModal');
+        const teacherPassword = document.getElementById('teacherPassword');
+        const passwordError = document.getElementById('passwordError');
+
+        // Event listeners
+        userRoleSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'teacher' && !isTeacherAuthenticated) {
+                showTeacherLogin();
+                e.target.value = 'parent'; // Reset to parent until authenticated
+            } else {
+                currentRole = e.target.value;
+                renderSchedule();
+            }
+        });
+
+        gradeSelect.addEventListener('change', (e) => {
+            currentGrade = e.target.value;
+            renderSchedule();
+        });
+
+        sectionSelect.addEventListener('change', (e) => {
+            currentSection = e.target.value;
+            renderSchedule();
+        });
+
+        document.getElementById('prevWeek').addEventListener('click', () => {
+            currentWeek--;
+            updateWeekDisplay();
+        });
+
+        document.getElementById('nextWeek').addEventListener('click', () => {
+            currentWeek++;
+            updateWeekDisplay();
+        });
+
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        document.getElementById('cancelEdit').addEventListener('click', closeModal);
+        document.getElementById('saveLesson').addEventListener('click', saveLesson);
+        document.getElementById('cancelLogin').addEventListener('click', hideTeacherLogin);
+        document.getElementById('confirmLogin').addEventListener('click', authenticateTeacher);
+        
+        // Allow Enter key to submit password
+        teacherPassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                authenticateTeacher();
+            }
+        });
+
+        // Close modal when clicking outside
+        lessonModal.addEventListener('click', (e) => {
+            if (e.target === lessonModal) {
+                closeModal();
+            }
+        });
+
+        function renderSchedule() {
+            const classData = scheduleData[currentGrade] && scheduleData[currentGrade][currentSection];
+            if (!classData) return;
+
+            const periods = ['الحصة الأولى', 'الحصة الثانية', 'الحصة الثالثة', 'الحصة الرابعة', 'الحصة الخامسة', 'فسحة', 'الحصة السادسة', 'الحصة السابعة'];
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday'];
+            
+            scheduleBody.innerHTML = '';
+
+            periods.forEach((period, periodIndex) => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-200 hover:bg-gray-50';
+
+                // Period name
+                const periodCell = document.createElement('td');
+                periodCell.className = 'px-6 py-4 font-semibold text-gray-700 bg-gray-50';
+                periodCell.textContent = period;
+                row.appendChild(periodCell);
+
+                // Days
+                days.forEach(day => {
+                    const cell = document.createElement('td');
+                    cell.className = 'px-6 py-4 text-center';
+
+                    const subject = classData.schedule[day][periodIndex];
+                    
+                    if (subject === 'فسحة') {
+                        cell.innerHTML = '<span class="text-gray-500 italic">فسحة</span>';
+                        cell.className += ' bg-yellow-50';
+                    } else if (subject === '') {
+                        // Empty slot - only teachers can add subjects
+                        if (currentRole === 'teacher') {
+                            cell.innerHTML = `
+                                <div class="cursor-pointer p-2 rounded-lg transition-colors bg-blue-50 hover:bg-blue-100 border-2 border-dashed border-blue-300" 
+                                     onclick="openLessonModal('${day}', '${periodIndex + 1}', '')">
+                                    <div class="text-blue-600 text-sm font-semibold">+ إضافة مادة</div>
+                                    <div class="flex justify-center mt-2">
+                                        <span class="w-3 h-3 bg-blue-400 rounded-full"></span>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            cell.innerHTML = `
+                                <div class="p-2 rounded-lg bg-gray-50 border-2 border-dashed border-gray-300">
+                                    <div class="text-gray-400 text-sm">لم يتم تحديد المادة</div>
+                                    <div class="flex justify-center mt-2">
+                                        <span class="w-3 h-3 bg-gray-300 rounded-full"></span>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    } else {
+                        const lesson = classData.lessons[day][String(periodIndex + 1)];
+                        const isCompleted = lesson && lesson.completed;
+                        
+                        cell.innerHTML = `
+                            <div class="cursor-pointer p-2 rounded-lg transition-colors ${isCompleted ? 'bg-green-100 hover:bg-green-200' : 'bg-gray-100 hover:bg-gray-200'}" 
+                                 onclick="openLessonModal('${day}', '${periodIndex + 1}', '${subject}')">
+                                <div class="font-semibold text-sm">${subject}</div>
+                                ${lesson && lesson.title ? `<div class="text-xs text-gray-600 mt-1">${lesson.title}</div>` : ''}
+                                <div class="flex justify-center mt-2">
+                                    ${isCompleted ? 
+                                        '<span class="w-3 h-3 bg-green-500 rounded-full"></span>' : 
+                                        '<span class="w-3 h-3 bg-gray-400 rounded-full"></span>'
+                                    }
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    row.appendChild(cell);
+                });
+
+                scheduleBody.appendChild(row);
+            });
+
+            updateStatistics();
+        }
+
+        function openLessonModal(day, period, subject) {
+            const classData = scheduleData[currentGrade][currentSection];
+            const lesson = classData.lessons[day][period];
+            
+            if (subject === '') {
+                modalTitle.textContent = `إضافة مادة جديدة - ${getDayName(day)} - ${getGradeName(currentGrade)} شعبة ${currentSection}`;
+            } else {
+                modalTitle.textContent = `${subject} - ${getDayName(day)} - ${getGradeName(currentGrade)} شعبة ${currentSection}`;
+            }
+            
+            if (currentRole === 'teacher') {
+                teacherView.classList.remove('hidden');
+                parentView.classList.add('hidden');
+                
+                // Show/hide subject name field based on whether subject is empty
+                const subjectNameField = document.getElementById('subjectNameField');
+                const subjectNameInput = document.getElementById('subjectName');
+                
+                if (subject === '') {
+                    subjectNameField.classList.remove('hidden');
+                    subjectNameInput.value = '';
+                } else {
+                    subjectNameField.classList.add('hidden');
+                    subjectNameInput.value = subject;
+                }
+                
+                // Populate teacher form
+                document.getElementById('lessonTitle').value = lesson.title || '';
+                document.getElementById('lessonContent').value = lesson.content || '';
+                document.getElementById('homework').value = lesson.homework || '';
+                document.getElementById('notes').value = lesson.notes || '';
+                
+                // Store current lesson info for saving
+                lessonModal.dataset.day = day;
+                lessonModal.dataset.period = period;
+                lessonModal.dataset.currentSubject = subject;
+            } else {
+                teacherView.classList.add('hidden');
+                parentView.classList.remove('hidden');
+                
+                // Populate parent view
+                if (lesson.completed && lesson.title) {
+                    lessonDetails.innerHTML = `
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div class="flex items-center mb-3">
+                                <svg class="w-5 h-5 text-green-600 ml-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span class="text-green-800 font-semibold">تم إنجاز الحصة</span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">عنوان الحصة:</h4>
+                                <p class="text-gray-700 bg-gray-50 p-3 rounded-lg">${lesson.title}</p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">محتوى الحصة:</h4>
+                                <p class="text-gray-700 bg-gray-50 p-3 rounded-lg">${lesson.content}</p>
+                            </div>
+                            
+                            ${lesson.homework ? `
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-2">الواجبات المنزلية:</h4>
+                                    <p class="text-gray-700 bg-yellow-50 p-3 rounded-lg border border-yellow-200">${lesson.homework}</p>
+                                </div>
+                            ` : ''}
+                            
+                            ${lesson.notes ? `
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-2">ملاحظات المعلم:</h4>
+                                    <p class="text-gray-700 bg-blue-50 p-3 rounded-lg border border-blue-200">${lesson.notes}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                } else {
+                    lessonDetails.innerHTML = `
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+                            <svg class="w-12 h-12 text-yellow-600 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <h4 class="font-semibold text-yellow-800 mb-2">لم يتم إضافة محتوى للحصة بعد</h4>
+                            <p class="text-yellow-700">سيقوم المعلم بإضافة تفاصيل الحصة قريباً</p>
+                        </div>
+                    `;
+                }
+            }
+            
+            lessonModal.classList.remove('hidden');
+            lessonModal.classList.add('flex');
+        }
+
+        function closeModal() {
+            lessonModal.classList.add('hidden');
+            lessonModal.classList.remove('flex');
+        }
+
+        function showTeacherLogin() {
+            teacherLoginModal.classList.remove('hidden');
+            teacherLoginModal.classList.add('flex');
+            teacherPassword.value = '';
+            passwordError.classList.add('hidden');
+            teacherPassword.focus();
+        }
+
+        function hideTeacherLogin() {
+            teacherLoginModal.classList.add('hidden');
+            teacherLoginModal.classList.remove('flex');
+        }
+
+        function authenticateTeacher() {
+            const password = teacherPassword.value;
+            if (password === TEACHER_PASSWORD) {
+                isTeacherAuthenticated = true;
+                currentRole = 'teacher';
+                userRoleSelect.value = 'teacher';
+                hideTeacherLogin();
+                renderSchedule();
+                showNotification('تم تسجيل الدخول بنجاح!', 'success');
+            } else {
+                passwordError.classList.remove('hidden');
+                teacherPassword.value = '';
+                teacherPassword.focus();
+            }
+        }
+
+        function saveLesson() {
+            const day = lessonModal.dataset.day;
+            const period = lessonModal.dataset.period;
+            const currentSubject = lessonModal.dataset.currentSubject;
+            
+            // Get the subject name (either existing or new)
+            const subjectName = currentSubject === '' ? 
+                document.getElementById('subjectName').value.trim() : 
+                currentSubject;
+            
+            // Validate subject name if it's a new subject
+            if (currentSubject === '' && !subjectName) {
+                showNotification('يرجى إدخال اسم المادة', 'error');
+                return;
+            }
+            
+            // Update the schedule with the subject name
+            scheduleData[currentGrade][currentSection].schedule[day][parseInt(period) - 1] = subjectName;
+            
+            // Update lesson data
+            const lesson = scheduleData[currentGrade][currentSection].lessons[day][period];
+            lesson.title = document.getElementById('lessonTitle').value;
+            lesson.content = document.getElementById('lessonContent').value;
+            lesson.homework = document.getElementById('homework').value;
+            lesson.notes = document.getElementById('notes').value;
+            lesson.completed = !!(lesson.title && lesson.content);
+            
+            renderSchedule();
+            closeModal();
+            
+            // Show success message
+            if (currentSubject === '') {
+                showNotification('تم إضافة المادة والحصة بنجاح!', 'success');
+            } else {
+                showNotification('تم حفظ الحصة بنجاح!', 'success');
+            }
+        }
+
+        function getDayName(day) {
+            const dayNames = {
+                'sunday': 'الأحد',
+                'monday': 'الاثنين',
+                'tuesday': 'الثلاثاء',
+                'wednesday': 'الأربعاء',
+                'thursday': 'الخميس'
+            };
+            return dayNames[day];
+        }
+
+        function getGradeName(grade) {
+            const gradeNames = {
+                '1': 'الأول متوسط',
+                '2': 'الثاني متوسط',
+                '3': 'الثالث متوسط'
+            };
+            return gradeNames[grade];
+        }
+
+        function updateStatistics() {
+            const classData = scheduleData[currentGrade][currentSection];
+            let completed = 0;
+            let pending = 0;
+            let total = 0;
+
+            Object.values(classData.lessons).forEach(dayLessons => {
+                Object.values(dayLessons).forEach(lesson => {
+                    total++;
+                    if (lesson.completed) {
+                        completed++;
+                    } else {
+                        pending++;
+                    }
+                });
+            });
+
+            document.getElementById('completedLessons').textContent = completed;
+            document.getElementById('pendingLessons').textContent = pending;
+            document.getElementById('totalSubjects').textContent = classData.subjects.length;
+        }
+
+        function updateWeekDisplay() {
+            const weekElement = document.getElementById('currentWeek');
+            const datesElement = document.getElementById('weekDates');
+            
+            // Hijri months for Saudi academic calendar 1447
+            const hijriMonths = [
+                'محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 
+                'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'
+            ];
+            
+            // بداية العام الدراسي 1447هـ حسب وزارة التعليم السعودية: 1 ربيع الأول 1447هـ
+            const baseWeekStart = 1; // 1 ربيع الأول 1447هـ (بداية الأسبوع الأول)
+            const baseMonth = 2; // ربيع الأول (الشهر الثالث في التقويم الهجري)
+            
+            // حساب رقم الأسبوع الدراسي (الأسبوع الأول = 1)
+            const weekNumber = currentWeek + 1;
+            
+            // تحويل الأرقام إلى كلمات عربية
+            const weekNames = {
+                1: 'الأول', 2: 'الثاني', 3: 'الثالث', 4: 'الرابع', 5: 'الخامس',
+                6: 'السادس', 7: 'السابع', 8: 'الثامن', 9: 'التاسع', 10: 'العاشر',
+                11: 'الحادي عشر', 12: 'الثاني عشر', 13: 'الثالث عشر', 14: 'الرابع عشر', 15: 'الخامس عشر',
+                16: 'السادس عشر', 17: 'السابع عشر', 18: 'الثامن عشر', 19: 'التاسع عشر', 20: 'العشرون'
+            };
+            
+            if (weekNumber > 0 && weekNumber <= 20) {
+                weekElement.textContent = `الأسبوع ${weekNames[weekNumber]}`;
+            } else if (weekNumber > 20) {
+                weekElement.textContent = `الأسبوع ${weekNumber}`;
+            } else {
+                weekElement.textContent = 'قبل بداية العام الدراسي';
+            }
+            
+            // حساب التواريخ
+            const startDate = baseWeekStart + (currentWeek * 7);
+            const endDate = startDate + 4;
+            
+            let currentMonth = baseMonth;
+            let adjustedStartDate = startDate;
+            let adjustedEndDate = endDate;
+            
+            if (weekNumber <= 0) {
+                datesElement.textContent = 'العام الدراسي لم يبدأ بعد';
+                return;
+            }
+            
+            // إذا تجاوز التاريخ 30 يوم، انتقل للشهر التالي
+            while (adjustedStartDate > 30) {
+                adjustedStartDate -= 30;
+                adjustedEndDate -= 30;
+                currentMonth++;
+                if (currentMonth > 11) currentMonth = 0; // العودة لمحرم
+            }
+            
+            // إذا كان التاريخ سالب، اذهب للشهر السابق
+            while (adjustedStartDate <= 0) {
+                adjustedStartDate += 30;
+                adjustedEndDate += 30;
+                currentMonth--;
+                if (currentMonth < 0) currentMonth = 11; // العودة لذو الحجة
+            }
+            
+            if (adjustedEndDate > 30) {
+                // الأسبوع يمتد عبر شهرين
+                const daysInFirstMonth = 30 - adjustedStartDate + 1;
+                const daysInSecondMonth = adjustedEndDate - 30;
+                const nextMonth = currentMonth + 1 > 11 ? 0 : currentMonth + 1;
+                datesElement.textContent = `${adjustedStartDate}-30 ${hijriMonths[currentMonth]} / 1-${daysInSecondMonth} ${hijriMonths[nextMonth]} 1447هـ`;
+            } else {
+                datesElement.textContent = `${adjustedStartDate} - ${adjustedEndDate} ${hijriMonths[currentMonth]} 1447هـ`;
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg text-white ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} fade-in`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize the page
+        renderSchedule();
+        updateWeekDisplay();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97bd40e4a3b87898',t:'MTc1NzMyMjAwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
