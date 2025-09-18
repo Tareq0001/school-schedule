@@ -521,6 +521,11 @@
                         </select>
                     </div>
                     
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">تاريخ الإعلان</label>
+                        <input type="text" id="announcementDate" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="مثال: 15 ربيع الأول 1447هـ">
+                    </div>
+                    
                     <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse pt-4">
                         <button type="button" id="saveAnnouncement" class="flex-1 green-gradient text-white font-bold py-3 sm:py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
                             حفظ الإعلان
@@ -1238,6 +1243,7 @@
                     document.getElementById('announcementContent').value = announcement.content;
                     document.getElementById('announcementType').value = announcement.type;
                     document.getElementById('announcementColor').value = announcement.color;
+                    document.getElementById('announcementDate').value = announcement.date;
                 }
             } else {
                 title.textContent = 'إضافة إعلان جديد';
@@ -1245,6 +1251,11 @@
                 document.getElementById('announcementContent').value = '';
                 document.getElementById('announcementType').value = 'عام';
                 document.getElementById('announcementColor').value = 'blue';
+                
+                // Set default date to current Hijri date
+                const currentDate = new Date();
+                const hijriDate = `${currentDate.getDate()} ${['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'][currentDate.getMonth()]} 1447هـ`;
+                document.getElementById('announcementDate').value = hijriDate;
             }
             
             modal.classList.remove('hidden');
@@ -1263,14 +1274,12 @@
             const content = document.getElementById('announcementContent').value.trim();
             const type = document.getElementById('announcementType').value;
             const color = document.getElementById('announcementColor').value;
+            const date = document.getElementById('announcementDate').value.trim();
             
-            if (!title || !content) {
+            if (!title || !content || !date) {
                 showNotification('يرجى ملء جميع الحقول المطلوبة', 'error');
                 return;
             }
-            
-            const currentDate = new Date();
-            const hijriDate = `${currentDate.getDate()} ${['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'][currentDate.getMonth()]} 1447هـ`;
             
             if (currentAnnouncementId) {
                 // Edit existing announcement
@@ -1281,7 +1290,8 @@
                         title,
                         content,
                         type,
-                        color
+                        color,
+                        date
                     };
                     showNotification('تم تحديث الإعلان بنجاح! ✅', 'success');
                 }
@@ -1293,7 +1303,7 @@
                     content,
                     type,
                     color,
-                    date: hijriDate
+                    date
                 };
                 announcements.unshift(newAnnouncement);
                 showNotification('تم إضافة الإعلان بنجاح! 🎉', 'success');
@@ -1320,5 +1330,5 @@
         updateWeekDisplay();
         renderAnnouncements();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9811ae7a12179f72',t:'MTc1ODIwNzI5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9811b9363678357d',t:'MTc1ODIwNzczOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
