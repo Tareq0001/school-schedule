@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0">
     <title>نظام إدارة الجدول الدراسي - شركة مواهب التربية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -103,56 +103,71 @@
         .logo-container:hover {
             transform: scale(1.05);
         }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .subject-card {
+                min-height: 60px;
+                padding: 8px !important;
+            }
+            
+            .subject-card .font-bold {
+                font-size: 12px !important;
+            }
+            
+            .subject-card .text-sm {
+                font-size: 10px !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
     <!-- Header -->
     <header class="gradient-bg text-white shadow-2xl">
-        <div class="container mx-auto px-6 py-8">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-6 space-x-reverse">
-                    <div class="flex items-center space-x-4 space-x-reverse">
-
-                        <div class="bg-white bg-opacity-25 p-6 rounded-3xl backdrop-blur-sm logo-container shadow-2xl border border-white border-opacity-40">
+        <div class="container mx-auto px-3 sm:px-6 py-4 sm:py-8">
+            <div class="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
+                <div class="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-6 lg:space-x-reverse">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="bg-white bg-opacity-25 p-3 lg:p-6 rounded-2xl lg:rounded-3xl backdrop-blur-sm logo-container shadow-2xl border border-white border-opacity-40">
                             <img src="https://mwahib.edu.sa/wp-content/uploads/2022/02/Artboard-%D9%A1.png" 
                                  alt="شعار مواهب التربية الرسمي" 
-                                 class="w-24 h-24 rounded-2xl object-contain shadow-xl border-3 border-white border-opacity-50 bg-white bg-opacity-95"
+                                 class="w-16 h-16 lg:w-24 lg:h-24 rounded-xl lg:rounded-2xl object-contain shadow-xl border-2 lg:border-3 border-white border-opacity-50 bg-white bg-opacity-95"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <svg class="w-16 h-16 hidden text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-12 h-12 lg:w-16 lg:h-16 hidden text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
                             </svg>
                         </div>
-                        <div class="bg-white bg-opacity-25 p-6 rounded-3xl backdrop-blur-sm logo-container shadow-2xl border border-white border-opacity-40">
+                        <div class="bg-white bg-opacity-25 p-3 lg:p-6 rounded-2xl lg:rounded-3xl backdrop-blur-sm logo-container shadow-2xl border border-white border-opacity-40">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-Vq-W1kYDrap9R9evZFp4qMiFYqXT6hk3A&s" 
                                  alt="شعار إضافي للمؤسسة التعليمية" 
-                                 class="w-24 h-24 rounded-2xl object-contain shadow-xl border-3 border-white border-opacity-50 bg-white bg-opacity-95"
+                                 class="w-16 h-16 lg:w-24 lg:h-24 rounded-xl lg:rounded-2xl object-contain shadow-xl border-2 lg:border-3 border-white border-opacity-50 bg-white bg-opacity-95"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <svg class="w-16 h-16 hidden text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-12 h-12 lg:w-16 lg:h-16 hidden text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
                             </svg>
                         </div>
                     </div>
-                    <div>
-                        <h1 class="text-3xl font-bold">نظام إدارة الجدول الدراسي</h1>
-                        <p class="text-blue-100 text-lg font-semibold">شركة مواهب التربية</p>
-                        <p class="text-blue-200 text-base">مدرسة متوسطة أبها الأهلية - العام الدراسي 1447هـ</p>
+                    <div class="text-center lg:text-right">
+                        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold">نظام إدارة الجدول الدراسي</h1>
+                        <p class="text-blue-100 text-sm sm:text-base lg:text-lg font-semibold">شركة مواهب التربية</p>
+                        <p class="text-blue-200 text-xs sm:text-sm lg:text-base">مدرسة متوسطة أبها الأهلية - العام الدراسي 1447هـ</p>
                     </div>
                 </div>
                 
                 <!-- Week Navigation -->
-                <div class="bg-white bg-opacity-20 rounded-2xl p-6 text-center backdrop-blur-sm">
-                    <div class="flex items-center space-x-6 space-x-reverse">
-                        <button id="prevWeek" class="bg-white bg-opacity-30 hover:bg-opacity-50 p-3 rounded-full transition-all duration-300 hover:scale-110">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <div class="bg-white bg-opacity-20 rounded-2xl p-4 lg:p-6 text-center backdrop-blur-sm">
+                    <div class="flex items-center space-x-4 lg:space-x-6 space-x-reverse">
+                        <button id="prevWeek" class="bg-white bg-opacity-30 hover:bg-opacity-50 p-2 lg:p-3 rounded-full transition-all duration-300 hover:scale-110">
+                            <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
                         </button>
                         <div>
-                            <div id="currentWeek" class="font-bold text-xl">الأسبوع الأول</div>
-                            <div id="weekDates" class="text-sm text-blue-100 mt-1">1 - 5 ربيع الأول 1447هـ</div>
+                            <div id="currentWeek" class="font-bold text-lg lg:text-xl">الأسبوع الأول</div>
+                            <div id="weekDates" class="text-xs lg:text-sm text-blue-100 mt-1">1 - 5 ربيع الأول 1447هـ</div>
                         </div>
-                        <button id="nextWeek" class="bg-white bg-opacity-30 hover:bg-opacity-50 p-3 rounded-full transition-all duration-300 hover:scale-110">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <button id="nextWeek" class="bg-white bg-opacity-30 hover:bg-opacity-50 p-2 lg:p-3 rounded-full transition-all duration-300 hover:scale-110">
+                            <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                             </svg>
                         </button>
@@ -163,20 +178,20 @@
     </header>
 
     <!-- Controls -->
-    <div class="container mx-auto px-6 py-8">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8 border border-gray-100">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="container mx-auto px-3 sm:px-6 py-4 sm:py-8">
+        <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-8 mb-4 sm:mb-8 border border-gray-100">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-3">نوع المستخدم</label>
-                    <select id="userRole" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 bg-gradient-to-r from-white to-gray-50">
+                    <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">نوع المستخدم</label>
+                    <select id="userRole" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 bg-gradient-to-r from-white to-gray-50 text-sm sm:text-base">
                         <option value="parent">ولي أمر</option>
                         <option value="teacher">معلم</option>
                     </select>
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-3">الصف</label>
-                    <select id="gradeSelect" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 bg-gradient-to-r from-white to-gray-50">
+                    <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">الصف</label>
+                    <select id="gradeSelect" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 bg-gradient-to-r from-white to-gray-50 text-sm sm:text-base">
                         <option value="1">الأول متوسط</option>
                         <option value="2">الثاني متوسط</option>
                         <option value="3">الثالث متوسط</option>
@@ -184,33 +199,31 @@
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-3">الشعبة</label>
-                    <select id="sectionSelect" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 bg-gradient-to-r from-white to-gray-50">
+                    <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">الشعبة</label>
+                    <select id="sectionSelect" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 bg-gradient-to-r from-white to-gray-50 text-sm sm:text-base">
                         <option value="أ">أ</option>
                         <option value="ب">ب</option>
                         <option value="ج">ج</option>
                         <option value="د">د</option>
                     </select>
                 </div>
-                
-
             </div>
         </div>
 
         <!-- Schedule Table -->
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
             <div class="overflow-x-auto">
-                <table class="w-full">
+                <table class="w-full min-w-[800px]">
                     <thead class="gradient-bg text-white">
                         <tr>
-                            <th class="px-8 py-6 text-right font-bold text-lg">اليوم</th>
-                            <th class="px-8 py-6 text-center font-bold text-lg">الحصة الأولى</th>
-                            <th class="px-8 py-6 text-center font-bold text-lg">الحصة الثانية</th>
-                            <th class="px-8 py-6 text-center font-bold text-lg">الحصة الثالثة</th>
-                            <th class="px-8 py-6 text-center font-bold text-lg">الحصة الرابعة</th>
-                            <th class="px-8 py-6 text-center font-bold text-lg">الحصة الخامسة</th>
-                            <th class="px-8 py-6 text-center font-bold text-lg">الحصة السادسة</th>
-                            <th class="px-8 py-6 text-center font-bold text-lg">الحصة السابعة</th>
+                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-right font-bold text-sm sm:text-base lg:text-lg">اليوم</th>
+                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الأولى</th>
+                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الثانية</th>
+                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الثالثة</th>
+                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الرابعة</th>
+                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الخامسة</th>
+                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة السادسة</th>
+                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة السابعة</th>
                         </tr>
                     </thead>
                     <tbody id="scheduleBody">
@@ -221,35 +234,35 @@
         </div>
 
         <!-- Statistics Section -->
-        <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8 border border-gray-100">
-            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">إحصائيات الجدول الدراسي</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="blue-gradient text-white rounded-2xl p-6 text-center shadow-xl">
-                    <div class="text-4xl font-bold mb-2" id="completedLessons">0</div>
-                    <div class="text-lg">الحصص المكتملة</div>
+        <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-8 mb-4 sm:mb-8 border border-gray-100 mt-4 sm:mt-8">
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">إحصائيات الجدول الدراسي</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                <div class="blue-gradient text-white rounded-2xl p-4 sm:p-6 text-center shadow-xl">
+                    <div class="text-2xl sm:text-4xl font-bold mb-2" id="completedLessons">0</div>
+                    <div class="text-sm sm:text-lg">الحصص المكتملة</div>
                 </div>
-                <div class="orange-gradient text-white rounded-2xl p-6 text-center shadow-xl">
-                    <div class="text-4xl font-bold mb-2" id="pendingLessons">0</div>
-                    <div class="text-lg">الحصص المعلقة</div>
+                <div class="orange-gradient text-white rounded-2xl p-4 sm:p-6 text-center shadow-xl">
+                    <div class="text-2xl sm:text-4xl font-bold mb-2" id="pendingLessons">0</div>
+                    <div class="text-sm sm:text-lg">الحصص المعلقة</div>
                 </div>
-                <div class="green-gradient text-white rounded-2xl p-6 text-center shadow-xl">
-                    <div class="text-4xl font-bold mb-2" id="totalSubjects">0</div>
-                    <div class="text-lg">إجمالي المواد</div>
+                <div class="green-gradient text-white rounded-2xl p-4 sm:p-6 text-center shadow-xl">
+                    <div class="text-2xl sm:text-4xl font-bold mb-2" id="totalSubjects">0</div>
+                    <div class="text-sm sm:text-lg">إجمالي المواد</div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="gradient-bg text-white py-8 mt-12">
-        <div class="container mx-auto px-6 text-center">
+    <footer class="gradient-bg text-white py-6 sm:py-8 mt-8 sm:mt-12">
+        <div class="container mx-auto px-3 sm:px-6 text-center">
             <div class="mb-4">
-                <h3 class="text-xl font-bold mb-2">شركة مواهب التربية</h3>
-                <p class="text-blue-100 mb-1">مدرسة متوسطة أبها الأهلية</p>
-                <p class="text-blue-100">جميع الحقوق محفوظة © 2025</p>
+                <h3 class="text-lg sm:text-xl font-bold mb-2">شركة مواهب التربية</h3>
+                <p class="text-blue-100 mb-1 text-sm sm:text-base">مدرسة متوسطة أبها الأهلية</p>
+                <p class="text-blue-100 text-sm sm:text-base">جميع الحقوق محفوظة © 2025</p>
             </div>
             <div class="border-t border-white border-opacity-20 pt-4">
-                <p class="text-blue-100">
+                <p class="text-blue-100 text-sm sm:text-base">
                     التصميم والتطوير: <span class="font-bold text-white">أ. طارق أبوعشي</span>
                 </p>
             </div>
@@ -259,51 +272,51 @@
     <!-- Lesson Modal -->
     <div id="lessonModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal-backdrop z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-gray-200">
-            <div class="gradient-bg text-white p-8 rounded-t-2xl">
+            <div class="gradient-bg text-white p-4 sm:p-8 rounded-t-2xl">
                 <div class="flex justify-between items-center">
-                    <h2 id="modalTitle" class="text-2xl font-bold">تفاصيل الحصة</h2>
+                    <h2 id="modalTitle" class="text-lg sm:text-2xl font-bold">تفاصيل الحصة</h2>
                     <button id="closeModal" class="text-white hover:text-gray-200 transition-colors p-2 hover:bg-white hover:bg-opacity-20 rounded-full">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
                         </svg>
                     </button>
                 </div>
             </div>
             
-            <div class="p-8">
+            <div class="p-4 sm:p-8">
                 <!-- Teacher View -->
                 <div id="teacherView" class="hidden">
-                    <form class="space-y-6">
+                    <form class="space-y-4 sm:space-y-6">
                         <div id="subjectNameField" class="hidden">
-                            <label class="block text-sm font-bold text-gray-700 mb-3">اسم المادة</label>
-                            <input type="text" id="subjectName" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300" placeholder="أدخل اسم المادة">
+                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">اسم المادة</label>
+                            <input type="text" id="subjectName" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل اسم المادة">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-3">عنوان الحصة</label>
-                            <input type="text" id="lessonTitle" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300" placeholder="أدخل عنوان الحصة">
+                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">عنوان الحصة</label>
+                            <input type="text" id="lessonTitle" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل عنوان الحصة">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-3">محتوى الحصة</label>
-                            <textarea id="lessonContent" rows="4" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300" placeholder="أدخل محتوى الحصة"></textarea>
+                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">محتوى الحصة</label>
+                            <textarea id="lessonContent" rows="4" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل محتوى الحصة"></textarea>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-3">الواجبات المنزلية</label>
-                            <textarea id="homework" rows="3" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300" placeholder="أدخل الواجبات المنزلية (اختياري)"></textarea>
+                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">الواجبات المنزلية</label>
+                            <textarea id="homework" rows="3" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل الواجبات المنزلية (اختياري)"></textarea>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-3">ملاحظات إضافية</label>
-                            <textarea id="notes" rows="2" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300" placeholder="أدخل ملاحظات إضافية (اختياري)"></textarea>
+                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">ملاحظات إضافية</label>
+                            <textarea id="notes" rows="2" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل ملاحظات إضافية (اختياري)"></textarea>
                         </div>
                         
-                        <div class="flex space-x-4 space-x-reverse pt-6">
-                            <button type="button" id="saveLesson" class="flex-1 green-gradient text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse pt-4 sm:pt-6">
+                            <button type="button" id="saveLesson" class="flex-1 green-gradient text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
                                 حفظ الحصة
                             </button>
-                            <button type="button" id="cancelEdit" class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
+                            <button type="button" id="cancelEdit" class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
                                 إلغاء
                             </button>
                         </div>
@@ -323,35 +336,35 @@
     <!-- Teacher Login Modal -->
     <div id="teacherLoginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal-backdrop z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-gray-200">
-            <div class="gradient-bg text-white p-8 rounded-t-2xl">
-                <h2 class="text-2xl font-bold text-center">تسجيل دخول المعلم</h2>
+            <div class="gradient-bg text-white p-4 sm:p-8 rounded-t-2xl">
+                <h2 class="text-lg sm:text-2xl font-bold text-center">تسجيل دخول المعلم</h2>
             </div>
             
-            <div class="p-8">
-                <div class="text-center mb-8">
-                    <div class="blue-gradient p-6 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center shadow-xl">
-                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div class="p-4 sm:p-8">
+                <div class="text-center mb-6 sm:mb-8">
+                    <div class="blue-gradient p-4 sm:p-6 rounded-full w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center shadow-xl">
+                        <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <p class="text-gray-600 text-lg">يرجى إدخال كلمة المرور للوصول إلى واجهة المعلم</p>
+                    <p class="text-gray-600 text-sm sm:text-lg">يرجى إدخال كلمة المرور للوصول إلى واجهة المعلم</p>
                 </div>
                 
-                <div class="space-y-6">
+                <div class="space-y-4 sm:space-y-6">
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-3">كلمة المرور</label>
-                        <input type="password" id="teacherPassword" class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300" placeholder="أدخل كلمة المرور">
+                        <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">كلمة المرور</label>
+                        <input type="password" id="teacherPassword" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل كلمة المرور">
                     </div>
                     
-                    <div id="passwordError" class="hidden bg-gradient-to-r from-red-100 to-red-50 border-2 border-red-300 text-red-700 px-6 py-4 rounded-xl">
+                    <div id="passwordError" class="hidden bg-gradient-to-r from-red-100 to-red-50 border-2 border-red-300 text-red-700 px-4 sm:px-6 py-3 sm:py-4 rounded-xl text-sm sm:text-base">
                         كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.
                     </div>
                     
-                    <div class="flex space-x-4 space-x-reverse pt-6">
-                        <button id="confirmLogin" class="flex-1 blue-gradient text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse pt-4 sm:pt-6">
+                        <button id="confirmLogin" class="flex-1 blue-gradient text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
                             تسجيل الدخول
                         </button>
-                        <button id="cancelLogin" class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
+                        <button id="cancelLogin" class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
                             إلغاء
                         </button>
                     </div>
@@ -624,33 +637,33 @@
                 row.className = 'border-b-2 border-gray-100 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 transition-all duration-300';
 
                 const dayCell = document.createElement('td');
-                dayCell.className = 'px-8 py-6 font-bold text-gray-800 bg-gradient-to-r from-gray-50 to-gray-100 border-l-4 border-blue-500';
+                dayCell.className = 'px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 font-bold text-gray-800 bg-gradient-to-r from-gray-50 to-gray-100 border-l-4 border-blue-500 text-sm sm:text-base';
                 dayCell.textContent = dayNames[dayIndex];
                 row.appendChild(dayCell);
 
                 for (let periodIndex = 0; periodIndex < periods; periodIndex++) {
                     const cell = document.createElement('td');
-                    cell.className = 'px-6 py-4 text-center';
+                    cell.className = 'px-1 sm:px-3 lg:px-6 py-2 sm:py-3 lg:py-4 text-center';
 
                     const subject = classData.schedule[day][periodIndex];
                     
                     if (subject === '') {
                         if (currentRole === 'teacher') {
                             cell.innerHTML = `
-                                <div class="empty-slot subject-card cursor-pointer p-4 mx-2 hover-scale shadow-lg" 
+                                <div class="empty-slot subject-card cursor-pointer p-2 sm:p-3 lg:p-4 mx-1 hover-scale shadow-lg" 
                                      onclick="openLessonModal('${day}', '${periodIndex + 1}', '')">
-                                    <div class="text-gray-600 font-bold text-lg">+ إضافة مادة</div>
-                                    <div class="flex justify-center mt-2">
-                                        <div class="w-4 h-4 bg-gray-400 rounded-full animate-pulse"></div>
+                                    <div class="text-gray-600 font-bold text-xs sm:text-sm lg:text-lg">+ إضافة مادة</div>
+                                    <div class="flex justify-center mt-1 sm:mt-2">
+                                        <div class="w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-gray-400 rounded-full animate-pulse"></div>
                                     </div>
                                 </div>
                             `;
                         } else {
                             cell.innerHTML = `
-                                <div class="empty-slot subject-card p-4 mx-2 shadow-lg">
-                                    <div class="text-gray-500 font-bold">لم يتم تحديد المادة</div>
-                                    <div class="flex justify-center mt-2">
-                                        <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                                <div class="empty-slot subject-card p-2 sm:p-3 lg:p-4 mx-1 shadow-lg">
+                                    <div class="text-gray-500 font-bold text-xs sm:text-sm">لم يتم تحديد المادة</div>
+                                    <div class="flex justify-center mt-1 sm:mt-2">
+                                        <div class="w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-gray-300 rounded-full"></div>
                                     </div>
                                 </div>
                             `;
@@ -661,14 +674,14 @@
                         const colorClass = subjectColors[subject] || 'blue-gradient';
                         
                         cell.innerHTML = `
-                            <div class="subject-card cursor-pointer p-4 mx-2 hover-scale shadow-lg ${isCompleted ? colorClass : 'pending-lesson'}" 
+                            <div class="subject-card cursor-pointer p-2 sm:p-3 lg:p-4 mx-1 hover-scale shadow-lg ${isCompleted ? colorClass : 'pending-lesson'}" 
                                  onclick="openLessonModal('${day}', '${periodIndex + 1}', '${subject}')">
-                                <div class="font-bold text-lg text-white">${subject}</div>
-                                ${lesson && lesson.title ? `<div class="text-sm text-white opacity-90 mt-1">${lesson.title}</div>` : '<div class="text-sm text-white opacity-75 mt-1">لم يتم إضافة المحتوى</div>'}
-                                <div class="flex justify-center mt-3">
+                                <div class="font-bold text-xs sm:text-sm lg:text-lg text-white">${subject}</div>
+                                ${lesson && lesson.title ? `<div class="text-xs sm:text-sm text-white opacity-90 mt-1">${lesson.title}</div>` : '<div class="text-xs sm:text-sm text-white opacity-75 mt-1">لم يتم إضافة المحتوى</div>'}
+                                <div class="flex justify-center mt-1 sm:mt-2 lg:mt-3">
                                     ${isCompleted ? 
-                                        '<div class="w-4 h-4 bg-white rounded-full shadow-inner"></div>' : 
-                                        '<div class="w-4 h-4 bg-white bg-opacity-50 rounded-full"></div>'
+                                        '<div class="w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-white rounded-full shadow-inner"></div>' : 
+                                        '<div class="w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-white bg-opacity-50 rounded-full"></div>'
                                     }
                                 </div>
                             </div>
@@ -723,83 +736,83 @@
                 
                 if (lesson.completed && lesson.title) {
                     lessonDetails.innerHTML = `
-                        <div class="bg-gradient-to-r from-green-100 to-emerald-100 border-2 border-green-300 rounded-2xl p-6 shadow-lg">
+                        <div class="bg-gradient-to-r from-green-100 to-emerald-100 border-2 border-green-300 rounded-2xl p-4 sm:p-6 shadow-lg">
                             <div class="flex items-center mb-4">
-                                <div class="green-gradient p-3 rounded-full shadow-lg">
-                                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="green-gradient p-2 sm:p-3 rounded-full shadow-lg">
+                                    <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
                                 </div>
-                                <span class="text-green-800 font-bold text-xl mr-4">تم إنجاز الحصة بنجاح</span>
+                                <span class="text-green-800 font-bold text-sm sm:text-xl mr-3 sm:mr-4">تم إنجاز الحصة بنجاح</span>
                             </div>
                         </div>
                         
-                        <div class="space-y-6 mt-6">
-                            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 border-2 border-blue-200">
-                                <h4 class="font-bold text-gray-800 mb-3 text-lg flex items-center">
-                                    <span class="blue-gradient p-2 rounded-full mr-3">
-                                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
+                            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-4 sm:p-6 border-2 border-blue-200">
+                                <h4 class="font-bold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-lg flex items-center">
+                                    <span class="blue-gradient p-1 sm:p-2 rounded-full mr-2 sm:mr-3">
+                                        <svg class="w-3 h-3 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                     </span>
                                     عنوان الحصة:
                                 </h4>
-                                <p class="text-gray-700 bg-white p-4 rounded-xl shadow-inner border">${lesson.title}</p>
+                                <p class="text-gray-700 bg-white p-3 sm:p-4 rounded-xl shadow-inner border text-sm sm:text-base">${lesson.title}</p>
                             </div>
                             
-                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border-2 border-purple-200">
-                                <h4 class="font-bold text-gray-800 mb-3 text-lg flex items-center">
-                                    <span class="purple-gradient p-2 rounded-full mr-3">
-                                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 sm:p-6 border-2 border-purple-200">
+                                <h4 class="font-bold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-lg flex items-center">
+                                    <span class="purple-gradient p-1 sm:p-2 rounded-full mr-2 sm:mr-3">
+                                        <svg class="w-3 h-3 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
                                             <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 102 0V3h4v1a1 1 0 102 0V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd"/>
                                         </svg>
                                     </span>
                                     محتوى الحصة:
                                 </h4>
-                                <p class="text-gray-700 bg-white p-4 rounded-xl shadow-inner border">${lesson.content}</p>
+                                <p class="text-gray-700 bg-white p-3 sm:p-4 rounded-xl shadow-inner border text-sm sm:text-base">${lesson.content}</p>
                             </div>
                             
                             ${lesson.homework ? `
-                                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6 border-2 border-yellow-300">
-                                    <h4 class="font-bold text-gray-800 mb-3 text-lg flex items-center">
-                                        <span class="orange-gradient p-2 rounded-full mr-3">
-                                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-4 sm:p-6 border-2 border-yellow-300">
+                                    <h4 class="font-bold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-lg flex items-center">
+                                        <span class="orange-gradient p-1 sm:p-2 rounded-full mr-2 sm:mr-3">
+                                            <svg class="w-3 h-3 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
                                                 <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 102 0V3h4v1a1 1 0 102 0V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm8 8a1 1 0 100-2h1a1 1 0 100 2h-1z" clip-rule="evenodd"/>
                                             </svg>
                                         </span>
                                         الواجبات المنزلية:
                                     </h4>
-                                    <p class="text-gray-700 bg-white p-4 rounded-xl shadow-inner border border-yellow-200">${lesson.homework}</p>
+                                    <p class="text-gray-700 bg-white p-3 sm:p-4 rounded-xl shadow-inner border border-yellow-200 text-sm sm:text-base">${lesson.homework}</p>
                                 </div>
                             ` : ''}
                             
                             ${lesson.notes ? `
-                                <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-6 border-2 border-indigo-200">
-                                    <h4 class="font-bold text-gray-800 mb-3 text-lg flex items-center">
-                                        <span class="blue-gradient p-2 rounded-full mr-3">
-                                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-4 sm:p-6 border-2 border-indigo-200">
+                                    <h4 class="font-bold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-lg flex items-center">
+                                        <span class="blue-gradient p-1 sm:p-2 rounded-full mr-2 sm:mr-3">
+                                            <svg class="w-3 h-3 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                                             </svg>
                                         </span>
                                         ملاحظات المعلم:
                                     </h4>
-                                    <p class="text-gray-700 bg-white p-4 rounded-xl shadow-inner border border-indigo-200">${lesson.notes}</p>
+                                    <p class="text-gray-700 bg-white p-3 sm:p-4 rounded-xl shadow-inner border border-indigo-200 text-sm sm:text-base">${lesson.notes}</p>
                                 </div>
                             ` : ''}
                         </div>
                     `;
                 } else {
                     lessonDetails.innerHTML = `
-                        <div class="bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-300 rounded-2xl p-8 text-center shadow-lg">
-                            <div class="orange-gradient p-6 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center shadow-xl">
-                                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-300 rounded-2xl p-6 sm:p-8 text-center shadow-lg">
+                            <div class="orange-gradient p-4 sm:p-6 rounded-full w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center shadow-xl">
+                                <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <h4 class="font-bold text-yellow-800 mb-4 text-xl">لم يتم إضافة محتوى للحصة بعد</h4>
-                            <p class="text-yellow-700 text-lg">سيقوم المعلم بإضافة تفاصيل الحصة قريباً إن شاء الله</p>
+                            <h4 class="font-bold text-yellow-800 mb-3 sm:mb-4 text-lg sm:text-xl">لم يتم إضافة محتوى للحصة بعد</h4>
+                            <p class="text-yellow-700 text-sm sm:text-lg">سيقوم المعلم بإضافة تفاصيل الحصة قريباً إن شاء الله</p>
                         </div>
                     `;
                 }
@@ -988,7 +1001,7 @@
 
         function showNotification(message, type) {
             const notification = document.createElement('div');
-            notification.className = `fixed top-6 left-1/2 transform -translate-x-1/2 z-50 px-8 py-4 rounded-2xl shadow-2xl text-white font-bold text-lg ${type === 'success' ? 'green-gradient' : 'red-gradient'} fade-in border-2 ${type === 'success' ? 'border-green-300' : 'border-red-300'}`;
+            notification.className = `fixed top-6 left-1/2 transform -translate-x-1/2 z-50 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl shadow-2xl text-white font-bold text-sm sm:text-lg ${type === 'success' ? 'green-gradient' : 'red-gradient'} fade-in border-2 ${type === 'success' ? 'border-green-300' : 'border-red-300'}`;
             notification.textContent = message;
             
             document.body.appendChild(notification);
@@ -1004,5 +1017,5 @@
         renderSchedule();
         updateWeekDisplay();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9811605e770a2cfa',t:'MTc1ODIwNDA5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98118d04b2f308b5',t:'MTc1ODIwNTkyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
