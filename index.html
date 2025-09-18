@@ -2,35 +2,23 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0">
-    <title>نظام إدارة الجدول الدراسي - شركة مواهب التربية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التواصل التعليمي - جدول الحصص الأسبوعية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
         
-        * {
-            font-family: 'Noto Sans Arabic', sans-serif;
+        body {
+            font-family: 'Cairo', sans-serif;
         }
         
         .fade-in {
-            animation: fadeIn 0.3s ease-in;
+            animation: fadeIn 0.5s ease-in;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .modal-backdrop {
-            backdrop-filter: blur(4px);
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
-        }
-        
-        .card-shadow {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
         .hover-scale {
@@ -41,538 +29,232 @@
             transform: scale(1.02);
         }
 
-        .blue-gradient {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-        }
+        @media print {
+            header,
+            footer,
+            .no-print {
+                display: none !important;
+            }
 
-        .cyan-gradient {
-            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
-        }
+            main {
+                padding: 0;
+                margin: 0;
+            }
 
-        .purple-gradient {
-            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-        }
-
-        .green-gradient {
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-        }
-
-        .orange-gradient {
-            background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
-        }
-
-        .red-gradient {
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-        }
-
-        .subject-card {
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .subject-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .completed-lesson {
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-            color: white;
-        }
-
-        .pending-lesson {
-            background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
-            color: white;
-        }
-
-        .empty-slot {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            border: 2px dashed #cbd5e1;
-        }
-
-        .break-slot {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: white;
-        }
-
-        .logo-container {
-            transition: all 0.3s ease;
-        }
-
-        .logo-container:hover {
-            transform: scale(1.05);
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            body {
-                font-size: 16px;
-                -webkit-text-size-adjust: 100%;
+            .printable {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                overflow: visible;
             }
             
-            .subject-card {
-                min-height: 90px;
-                padding: 16px !important;
-                margin: 4px;
-                border-radius: 16px;
+            .overflow-x-auto {
+                overflow: visible;
             }
-            
-            .subject-card .font-bold {
-                font-size: 16px !important;
-                line-height: 1.3;
-                margin-bottom: 4px;
-            }
-            
-            .subject-card .text-sm {
-                font-size: 14px !important;
-                line-height: 1.4;
-            }
-            
-            /* Better touch targets */
-            button, .subject-card {
-                min-height: 56px;
-                touch-action: manipulation;
-            }
-            
-            /* Larger buttons for mobile */
-            button {
-                padding: 16px 20px !important;
-                font-size: 16px !important;
-                border-radius: 12px;
-            }
-            
-            /* Better table spacing on mobile */
+
             table {
-                font-size: 14px;
+                width: 100%;
+                border-collapse: collapse;
             }
-            
-            table th {
-                padding: 12px 6px !important;
-                font-size: 12px !important;
-                line-height: 1.2;
-            }
-            
-            table td {
-                padding: 8px 4px !important;
-                vertical-align: middle;
-            }
-            
-            /* Header improvements for mobile */
-            .container {
-                padding-left: 16px !important;
-                padding-right: 16px !important;
-            }
-            
-            /* Modal improvements */
-            .modal-backdrop .bg-white {
-                margin: 16px;
-                max-height: calc(100vh - 32px);
-            }
-            
-            /* Form improvements */
-            input, textarea, select {
-                font-size: 16px !important;
-                padding: 16px !important;
-                border-radius: 12px;
-            }
-            
-            /* Responsive text sizes */
-            .text-xs { font-size: 14px !important; }
-            .text-sm { font-size: 16px !important; }
-            .text-base { font-size: 18px !important; }
-            .text-lg { font-size: 20px !important; }
-            .text-xl { font-size: 22px !important; }
-            .text-2xl { font-size: 26px !important; }
-            .text-3xl { font-size: 30px !important; }
-            
-            /* Announcement cards mobile optimization */
-            .space-y-3 > * + * {
-                margin-top: 16px !important;
-            }
-            
-            /* Better spacing for mobile */
-            .py-4 { padding-top: 20px !important; padding-bottom: 20px !important; }
-            .py-6 { padding-top: 24px !important; padding-bottom: 24px !important; }
-            .py-8 { padding-top: 32px !important; padding-bottom: 32px !important; }
-            
-            .px-4 { padding-left: 20px !important; padding-right: 20px !important; }
-            .px-6 { padding-left: 24px !important; padding-right: 24px !important; }
-            .px-8 { padding-left: 32px !important; padding-right: 32px !important; }
-            
-            /* Week navigation mobile */
-            .flex.items-center.space-x-4 {
-                gap: 16px;
-            }
-            
-            /* Statistics cards mobile */
-            .grid.grid-cols-1.md\\:grid-cols-3 {
-                gap: 16px;
-            }
-        }
-        
-        /* Extra small devices */
-        @media (max-width: 480px) {
-            .text-xs { font-size: 12px !important; }
-            .text-sm { font-size: 14px !important; }
-            .text-base { font-size: 16px !important; }
-            .text-lg { font-size: 18px !important; }
-            .text-xl { font-size: 20px !important; }
-            .text-2xl { font-size: 22px !important; }
-            
-            .subject-card {
-                min-height: 80px;
-                padding: 12px !important;
-            }
-            
-            table th {
-                font-size: 10px !important;
-                padding: 8px 2px !important;
-            }
-            
-            .container {
-                padding-left: 12px !important;
-                padding-right: 12px !important;
+
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
             }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     <!-- Header -->
-    <header class="gradient-bg text-white shadow-2xl">
-        <div class="container mx-auto px-3 sm:px-6 py-4 sm:py-8">
-            <div class="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
-                <div class="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-6 lg:space-x-reverse">
-                    <div class="flex items-center space-x-3 space-x-reverse">
-                        <div class="bg-white bg-opacity-25 p-3 lg:p-6 rounded-2xl lg:rounded-3xl backdrop-blur-sm logo-container shadow-2xl border border-white border-opacity-40">
-                            <img src="https://mwahib.edu.sa/wp-content/uploads/2022/02/Artboard-%D9%A1.png" 
-                                 alt="شعار مواهب التربية الرسمي" 
-                                 class="w-16 h-16 lg:w-24 lg:h-24 rounded-xl lg:rounded-2xl object-contain shadow-xl border-2 lg:border-3 border-white border-opacity-50 bg-white bg-opacity-95"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <svg class="w-12 h-12 lg:w-16 lg:h-16 hidden text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
-                            </svg>
-                        </div>
-                        <div class="bg-white bg-opacity-25 p-3 lg:p-6 rounded-2xl lg:rounded-3xl backdrop-blur-sm logo-container shadow-2xl border border-white border-opacity-40">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-Vq-W1kYDrap9R9evZFp4qMiFYqXT6hk3A&s" 
-                                 alt="شعار إضافي للمؤسسة التعليمية" 
-                                 class="w-16 h-16 lg:w-24 lg:h-24 rounded-xl lg:rounded-2xl object-contain shadow-xl border-2 lg:border-3 border-white border-opacity-50 bg-white bg-opacity-95"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <svg class="w-12 h-12 lg:w-16 lg:h-16 hidden text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
-                            </svg>
-                        </div>
+    <header class="bg-white shadow-lg border-b-4 border-blue-500 no-print">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="bg-blue-500 text-white p-3 rounded-full">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
                     </div>
-                    <div class="text-center lg:text-right">
-                        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold">نظام إدارة الجدول الدراسي</h1>
-                        <p class="text-blue-100 text-sm sm:text-base lg:text-lg font-semibold">شركة مواهب التربية</p>
-                        <p class="text-blue-200 text-xs sm:text-sm lg:text-base">مدرسة متوسطة أبها الأهلية - العام الدراسي 1447هـ</p>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">متوسطة أبها الأهلية</h1>
+                        <p class="text-gray-600">منصة التواصل التعليمي - جدول الحصص الأسبوعية</p>
                     </div>
                 </div>
                 
-                <!-- Week Navigation -->
-                <div class="bg-white bg-opacity-20 rounded-2xl p-4 lg:p-6 text-center backdrop-blur-sm">
-                    <div class="flex items-center space-x-4 lg:space-x-6 space-x-reverse">
-                        <button id="prevWeek" class="bg-white bg-opacity-30 hover:bg-opacity-50 p-2 lg:p-3 rounded-full transition-all duration-300 hover:scale-110">
-                            <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </button>
-                        <div>
-                            <div id="currentWeek" class="font-bold text-lg lg:text-xl">الأسبوع الأول</div>
-                            <div id="weekDates" class="text-xs lg:text-sm text-blue-100 mt-1">1 - 5 ربيع الأول 1447هـ</div>
-                        </div>
-                        <button id="nextWeek" class="bg-white bg-opacity-30 hover:bg-opacity-50 p-2 lg:p-3 rounded-full transition-all duration-300 hover:scale-110">
-                            <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                            </svg>
-                        </button>
-                    </div>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <select id="userRole" class="bg-white border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none">
+                        <option value="parent">ولي أمر</option>
+                        <option value="teacher" selected>معلم</option>
+                    </select>
+                    
+                    <select id="gradeSelect" class="bg-white border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none ml-2">
+                        <option value="1">الأول متوسط</option>
+                        <option value="2">الثاني متوسط</option>
+                        <option value="3">الثالث متوسط</option>
+                    </select>
+                    
+                    <select id="sectionSelect" class="bg-white border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none">
+                        <option value="أ">شعبة أ</option>
+                        <option value="ب">شعبة ب</option>
+                        <option value="ج">شعبة ج</option>
+                        <option value="د">شعبة د</option>
+                    </select>
+
+                    <button id="printSchedule" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition-colors">
+                        طباعة
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Controls -->
-    <div class="container mx-auto px-3 sm:px-6 py-4 sm:py-8">
-        <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-8 mb-4 sm:mb-8 border border-gray-100">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">نوع المستخدم</label>
-                    <select id="userRole" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 bg-gradient-to-r from-white to-gray-50 text-sm sm:text-base">
-                        <option value="parent">ولي أمر</option>
-                        <option value="teacher">معلم</option>
-                    </select>
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Week Navigation -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 fade-in no-print">
+            <div class="flex justify-between items-center">
+                <button id="prevWeek" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors">
+                    الأسبوع السابق
+                </button>
+                
+                <div class="text-center">
+                    <h2 id="currentWeek" class="text-xl font-bold text-gray-800">الأسبوع الحالي</h2>
+                    <p id="weekDates" class="text-gray-600">1 - 5 ربيع الأول 1447هـ</p>
                 </div>
                 
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">الصف</label>
-                    <select id="gradeSelect" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 bg-gradient-to-r from-white to-gray-50 text-sm sm:text-base">
-                        <option value="1">الأول متوسط</option>
-                        <option value="2">الثاني متوسط</option>
-                        <option value="3">الثالث متوسط</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">الشعبة</label>
-                    <select id="sectionSelect" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 bg-gradient-to-r from-white to-gray-50 text-sm sm:text-base">
-                        <option value="أ">أ</option>
-                        <option value="ب">ب</option>
-                        <option value="ج">ج</option>
-                        <option value="د">د</option>
-                    </select>
-                </div>
+                <button id="nextWeek" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
+                    الأسبوع التالي
+                </button>
             </div>
         </div>
 
         <!-- Schedule Table -->
-        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden fade-in printable">
             <div class="overflow-x-auto">
-                <table class="w-full min-w-[800px]">
-                    <thead class="gradient-bg text-white">
+                <table class="w-full">
+                    <thead class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
                         <tr>
-                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-right font-bold text-sm sm:text-base lg:text-lg">اليوم</th>
-                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الأولى</th>
-                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الثانية</th>
-                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الثالثة</th>
-                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الرابعة</th>
-                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة الخامسة</th>
-                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة السادسة</th>
-                            <th class="px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 text-center font-bold text-xs sm:text-sm lg:text-lg">الحصة السابعة</th>
+                            <th class="px-6 py-4 text-right font-semibold">الحصة</th>
+                            <th class="px-6 py-4 text-center font-semibold">الأحد</th>
+                            <th class="px-6 py-4 text-center font-semibold">الاثنين</th>
+                            <th class="px-6 py-4 text-center font-semibold">الثلاثاء</th>
+                            <th class="px-6 py-4 text-center font-semibold">الأربعاء</th>
+                            <th class="px-6 py-4 text-center font-semibold">الخميس</th>
                         </tr>
                     </thead>
                     <tbody id="scheduleBody">
-                        <!-- Schedule content will be populated by JavaScript -->
+                        <!-- Schedule rows will be generated by JavaScript -->
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Announcements Section -->
-        <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-8 mb-4 sm:mb-8 border border-gray-100 mt-4 sm:mt-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6">
-                <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-0 flex items-center">
-                    <span class="orange-gradient p-2 sm:p-3 rounded-full mr-2 sm:mr-3 shadow-lg">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 no-print">
+            <div class="bg-white rounded-xl shadow-lg p-6 hover-scale fade-in">
+                <div class="flex items-center">
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                    </span>
-                    الإعلانات والأخبار
-                </h3>
-                <div id="teacherAnnouncementControls" class="hidden">
-                    <button id="addAnnouncementBtn" class="blue-gradient text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-bold text-sm sm:text-base hover:scale-105 transition-all duration-300 shadow-lg">
-                        + إضافة إعلان
-                    </button>
+                    </div>
+                    <div class="mr-4">
+                        <h3 class="text-lg font-semibold text-gray-800">الحصص المكتملة</h3>
+                        <p class="text-3xl font-bold text-green-600" id="completedLessons">18</p>
+                    </div>
                 </div>
             </div>
-            
-            <div id="announcementsList" class="space-y-3 sm:space-y-4">
-                <!-- Announcements will be populated by JavaScript -->
-            </div>
-        </div>
 
-        <!-- Statistics Section -->
-        <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-8 mb-4 sm:mb-8 border border-gray-100">
-            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">إحصائيات الجدول الدراسي</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                <div class="blue-gradient text-white rounded-2xl p-4 sm:p-6 text-center shadow-xl">
-                    <div class="text-2xl sm:text-4xl font-bold mb-2" id="completedLessons">0</div>
-                    <div class="text-sm sm:text-lg">الحصص المكتملة</div>
+            <div class="bg-white rounded-xl shadow-lg p-6 hover-scale fade-in">
+                <div class="flex items-center">
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="mr-4">
+                        <h3 class="text-lg font-semibold text-gray-800">الحصص المعلقة</h3>
+                        <p class="text-3xl font-bold text-yellow-600" id="pendingLessons">3</p>
+                    </div>
                 </div>
-                <div class="orange-gradient text-white rounded-2xl p-4 sm:p-6 text-center shadow-xl">
-                    <div class="text-2xl sm:text-4xl font-bold mb-2" id="pendingLessons">0</div>
-                    <div class="text-sm sm:text-lg">الحصص المعلقة</div>
-                </div>
-                <div class="green-gradient text-white rounded-2xl p-4 sm:p-6 text-center shadow-xl">
-                    <div class="text-2xl sm:text-4xl font-bold mb-2" id="totalSubjects">0</div>
-                    <div class="text-sm sm:text-lg">إجمالي المواد</div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 hover-scale fade-in">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <div class="mr-4">
+                        <h3 class="text-lg font-semibold text-gray-800">إجمالي المواد</h3>
+                        <p class="text-3xl font-bold text-blue-600" id="totalSubjects">7</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="gradient-bg text-white py-6 sm:py-8 mt-8 sm:mt-12">
-        <div class="container mx-auto px-3 sm:px-6 text-center">
-            <div class="mb-4">
-                <h3 class="text-lg sm:text-xl font-bold mb-2">شركة مواهب التربية</h3>
-                <p class="text-blue-100 mb-1 text-sm sm:text-base">مدرسة متوسطة أبها الأهلية</p>
-                <p class="text-blue-100 text-sm sm:text-base">جميع الحقوق محفوظة © 2025</p>
-            </div>
-            <div class="border-t border-white border-opacity-20 pt-4">
-                <p class="text-blue-100 text-sm sm:text-base">
-                    التصميم والتطوير: <span class="font-bold text-white">أ. طارق أبوعشي</span>
-                </p>
-            </div>
+    <footer class="bg-gray-800 text-white py-6 mt-12 no-print">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-300">تصميم وتطوير: أ. طارق أبوعشي</p>
+            <p class="text-gray-400 text-sm mt-2">متوسطة أبها الأهلية © 2025</p>
         </div>
     </footer>
 
-    <!-- Lesson Modal -->
-    <div id="lessonModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal-backdrop z-50 items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-gray-200">
-            <div class="gradient-bg text-white p-4 sm:p-8 rounded-t-2xl">
+    <!-- Modal for Lesson Details -->
+    <div id="lessonModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 no-print">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
                 <div class="flex justify-between items-center">
-                    <h2 id="modalTitle" class="text-lg sm:text-2xl font-bold">تفاصيل الحصة</h2>
-                    <button id="closeModal" class="text-white hover:text-gray-200 transition-colors p-2 hover:bg-white hover:bg-opacity-20 rounded-full">
-                        <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                        </svg>
-                    </button>
+                    <h3 id="modalTitle" class="text-xl font-bold text-gray-800"></h3>
+                    <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
                 </div>
             </div>
             
-            <div class="p-4 sm:p-8">
-                <!-- Teacher View -->
+            <div class="p-6">
                 <div id="teacherView" class="hidden">
-                    <form class="space-y-4 sm:space-y-6">
+                    <div class="space-y-4">
                         <div id="subjectNameField" class="hidden">
-                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">اسم المادة</label>
-                            <input type="text" id="subjectName" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل اسم المادة">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">اسم المادة</label>
+                            <input type="text" id="subjectName" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="أدخل اسم المادة">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">عنوان الحصة</label>
-                            <input type="text" id="lessonTitle" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل عنوان الحصة">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">عنوان الحصة</label>
+                            <input type="text" id="lessonTitle" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="أدخل عنوان الحصة">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">محتوى الحصة</label>
-                            <textarea id="lessonContent" rows="4" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل محتوى الحصة"></textarea>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">محتوى الحصة</label>
+                            <textarea id="lessonContent" rows="4" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="اكتب تفاصيل ما تم تدريسه في هذه الحصة"></textarea>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">الواجبات المنزلية</label>
-                            <textarea id="homework" rows="3" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل الواجبات المنزلية (اختياري)"></textarea>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">الواجبات المنزلية</label>
+                            <textarea id="homework" rows="3" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="الواجبات المطلوبة من الطلاب"></textarea>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">ملاحظات إضافية</label>
-                            <textarea id="notes" rows="2" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل ملاحظات إضافية (اختياري)"></textarea>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">ملاحظات إضافية</label>
+                            <textarea id="notes" rows="2" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none" placeholder="أي ملاحظات أو تنبيهات لأولياء الأمور"></textarea>
                         </div>
-                        
-                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse pt-4 sm:pt-6">
-                            <button type="button" id="saveLesson" class="flex-1 green-gradient text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
-                                حفظ الحصة
-                            </button>
-                            <button type="button" id="cancelEdit" class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
-                                إلغاء
-                            </button>
-                        </div>
-                    </form>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-4 space-x-reverse mt-6">
+                        <button id="cancelEdit" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors">إلغاء</button>
+                        <button id="saveLesson" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">حفظ الحصة</button>
+                    </div>
                 </div>
                 
-                <!-- Parent View -->
-                <div id="parentView" class="hidden">
-                    <div id="lessonDetails">
-                        <!-- Lesson details will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Announcement Modal -->
-    <div id="announcementModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal-backdrop z-50 items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200">
-            <div class="gradient-bg text-white p-4 sm:p-6 rounded-t-2xl">
-                <div class="flex justify-between items-center">
-                    <h2 id="announcementModalTitle" class="text-lg sm:text-2xl font-bold">إضافة إعلان جديد</h2>
-                    <button id="closeAnnouncementModal" class="text-white hover:text-gray-200 transition-colors p-2 hover:bg-white hover:bg-opacity-20 rounded-full">
-                        <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="p-4 sm:p-6">
-                <form class="space-y-4 sm:space-y-6">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">عنوان الإعلان</label>
-                        <input type="text" id="announcementTitle" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل عنوان الإعلان">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">محتوى الإعلان</label>
-                        <textarea id="announcementContent" rows="4" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل محتوى الإعلان"></textarea>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">نوع الإعلان</label>
-                        <select id="announcementType" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base">
-                            <option value="عام">عام</option>
-                            <option value="مهم">مهم</option>
-                            <option value="عاجل">عاجل</option>
-                            <option value="اختبارات">اختبارات</option>
-                            <option value="أنشطة">أنشطة</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">لون الإعلان</label>
-                        <select id="announcementColor" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base">
-                            <option value="blue">أزرق</option>
-                            <option value="green">أخضر</option>
-                            <option value="red">أحمر</option>
-                            <option value="orange">برتقالي</option>
-                            <option value="purple">بنفسجي</option>
-                            <option value="cyan">سماوي</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">تاريخ الإعلان</label>
-                        <input type="text" id="announcementDate" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="مثال: 15 ربيع الأول 1447هـ">
-                    </div>
-                    
-                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse pt-4">
-                        <button type="button" id="saveAnnouncement" class="flex-1 green-gradient text-white font-bold py-3 sm:py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
-                            حفظ الإعلان
-                        </button>
-                        <button type="button" id="cancelAnnouncement" class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold py-3 sm:py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
-                            إلغاء
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Teacher Login Modal -->
-    <div id="teacherLoginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal-backdrop z-50 items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-gray-200">
-            <div class="gradient-bg text-white p-4 sm:p-8 rounded-t-2xl">
-                <h2 class="text-lg sm:text-2xl font-bold text-center">تسجيل دخول المعلم</h2>
-            </div>
-            
-            <div class="p-4 sm:p-8">
-                <div class="text-center mb-6 sm:mb-8">
-                    <div class="blue-gradient p-4 sm:p-6 rounded-full w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center shadow-xl">
-                        <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
-                        </svg>
-                    </div>
-                    <p class="text-gray-600 text-sm sm:text-lg">يرجى إدخال كلمة المرور للوصول إلى واجهة المعلم</p>
-                </div>
-                
-                <div class="space-y-4 sm:space-y-6">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2 sm:mb-3">كلمة المرور</label>
-                        <input type="password" id="teacherPassword" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل كلمة المرور">
-                    </div>
-                    
-                    <div id="passwordError" class="hidden bg-gradient-to-r from-red-100 to-red-50 border-2 border-red-300 text-red-700 px-4 sm:px-6 py-3 sm:py-4 rounded-xl text-sm sm:text-base">
-                        كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.
-                    </div>
-                    
-                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse pt-4 sm:pt-6">
-                        <button id="confirmLogin" class="flex-1 blue-gradient text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
-                            تسجيل الدخول
-                        </button>
-                        <button id="cancelLogin" class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
-                            إلغاء
-                        </button>
+                <div id="parentView">
+                    <div id="lessonDetails" class="space-y-4">
+                        <!-- Lesson details will be populated here -->
                     </div>
                 </div>
             </div>
@@ -580,98 +262,177 @@
     </div>
 
     <script>
-        // Announcements data
-        let announcements = [
-            {
-                id: 1,
-                title: 'مرحباً بكم في العام الدراسي الجديد 1447هـ',
-                content: 'نتمنى لجميع الطلاب والطالبات عاماً دراسياً مليئاً بالنجاح والتفوق. نرحب بكم في مدرسة متوسطة أبها الأهلية.',
-                type: 'عام',
-                date: '1 ربيع الأول 1447هـ',
-                color: 'blue'
-            },
-            {
-                id: 2,
-                title: 'مواعيد الاختبارات الشهرية',
-                content: 'ستبدأ الاختبارات الشهرية للفصل الدراسي الأول يوم الأحد الموافق 15 ربيع الآخر 1447هـ. يرجى مراجعة الجدول الزمني للاختبارات.',
-                type: 'مهم',
-                date: '5 ربيع الأول 1447هـ',
-                color: 'green'
-            }
-        ];
-
-        // Sample schedule data structure with weekly data
+        // Sample data for middle school grades and sections
         const scheduleData = {
-            '1': {
+            '1': { // الأول متوسط
                 'أ': {
-                    subjects: [],
-                    weeks: {}
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
                 },
-                'ب': { subjects: [], weeks: {} },
-                'ج': { subjects: [], weeks: {} },
-                'د': { subjects: [], weeks: {} }
+                'ب': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                },
+                'ج': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                },
+                'د': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                }
             },
-            '2': {
-                'أ': { subjects: [], weeks: {} },
-                'ب': { subjects: [], weeks: {} },
-                'ج': { subjects: [], weeks: {} },
-                'د': { subjects: [], weeks: {} }
+            '2': { // الثاني متوسط
+                'أ': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                },
+                'ب': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                },
+                'ج': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                },
+                'د': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                }
             },
-            '3': {
-                'أ': { subjects: [], weeks: {} },
-                'ب': { subjects: [], weeks: {} },
-                'ج': { subjects: [], weeks: {} },
-                'د': { subjects: [], weeks: {} }
+            '3': { // الثالث متوسط
+                'أ': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                },
+                'ب': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                },
+                'ج': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                },
+                'د': {
+                    subjects: ['الرياضيات', 'العلوم', 'اللغة العربية', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ', 'الجغرافيا', 'التربية البدنية', 'مهارات رقمية'],
+                    schedule: {
+                        'sunday': ['مهارات رقمية', 'العلوم', 'اللغة العربية', 'فسحة', 'اللغة الإنجليزية', 'التربية الإسلامية', 'التاريخ'],
+                        'monday': ['اللغة العربية', 'اللغة الإنجليزية', 'الرياضيات', 'فسحة', 'العلوم', 'الجغرافيا', 'التربية البدنية'],
+                        'tuesday': ['العلوم', 'التربية الإسلامية', 'اللغة العربية', 'فسحة', 'الرياضيات', 'اللغة الإنجليزية', 'التاريخ'],
+                        'wednesday': ['اللغة الإنجليزية', 'الرياضيات', 'العلوم', 'فسحة', 'اللغة العربية', 'التربية الإسلامية', 'الجغرافيا'],
+                        'thursday': ['التربية البدنية', 'اللغة العربية', 'الرياضيات', 'فسحة', 'العلوم', 'اللغة الإنجليزية', 'التاريخ']
+                    },
+                    lessons: {}
+                }
             }
         };
 
-        // Initialize weekly data for all grades and sections
+        // Initialize lessons data for all grades and sections
         const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday'];
         const periods = ['1', '2', '3', '4', '5', '6', '7'];
         
-        function initializeWeek(grade, section, weekNumber) {
-            if (!scheduleData[grade][section].weeks[weekNumber]) {
-                scheduleData[grade][section].weeks[weekNumber] = {
-                    schedule: {
-                        sunday: ['', '', '', '', '', '', ''],
-                        monday: ['', '', '', '', '', '', ''],
-                        tuesday: ['', '', '', '', '', '', ''],
-                        wednesday: ['', '', '', '', '', '', ''],
-                        thursday: ['', '', '', '', '', '', '']
-                    },
-                    lessons: {}
-                };
-                
+        Object.keys(scheduleData).forEach(grade => {
+            Object.keys(scheduleData[grade]).forEach(section => {
                 days.forEach(day => {
-                    scheduleData[grade][section].weeks[weekNumber].lessons[day] = {};
+                    scheduleData[grade][section].lessons[day] = {};
                     periods.forEach(period => {
-                        scheduleData[grade][section].weeks[weekNumber].lessons[day][period] = {
+                        scheduleData[grade][section].lessons[day][period] = {
                             title: '',
                             content: '',
                             homework: '',
                             notes: '',
-                            completed: false
+                            completed: false // All lessons start empty
                         };
                     });
                 });
-            }
-        }
-        
-        // Initialize first week for all grades and sections
-        Object.keys(scheduleData).forEach(grade => {
-            Object.keys(scheduleData[grade]).forEach(section => {
-                initializeWeek(grade, section, 0);
             });
         });
 
+        // All lessons start empty - teachers will fill them
+
         let currentGrade = '1';
         let currentSection = 'أ';
-        let currentRole = 'parent';
+        let currentRole = 'teacher';
         let currentWeek = 0;
-        let isTeacherAuthenticated = false;
-        const TEACHER_PASSWORD = '123459876';
-        let currentAnnouncementId = null;
-        let nextAnnouncementId = 3;
+        let isTeacherAuthenticated = true;
+        const TEACHER_PASSWORD = 'ابها الاهلية2025';
 
         // DOM elements
         const userRoleSelect = document.getElementById('userRole');
@@ -683,46 +444,12 @@
         const teacherView = document.getElementById('teacherView');
         const parentView = document.getElementById('parentView');
         const lessonDetails = document.getElementById('lessonDetails');
-        const teacherLoginModal = document.getElementById('teacherLoginModal');
-        const teacherPassword = document.getElementById('teacherPassword');
-        const passwordError = document.getElementById('passwordError');
-
-        // Subject color mapping
-        const subjectColors = {
-            'الرياضيات': 'blue-gradient',
-            'العلوم': 'green-gradient',
-            'اللغة العربية': 'purple-gradient',
-            'التربية الإسلامية': 'cyan-gradient',
-            'الاجتماعيات': 'orange-gradient',
-            'اللغة الإنجليزية': 'red-gradient',
-            'الرياضة': 'green-gradient',
-            'الفنية': 'purple-gradient',
-            'الحاسوب': 'blue-gradient',
-            'المكتبة': 'cyan-gradient',
-            'النشاط': 'orange-gradient'
-        };
-
+        
         // Event listeners
         userRoleSelect.addEventListener('change', (e) => {
-            if (e.target.value === 'teacher' && !isTeacherAuthenticated) {
-                showTeacherLogin();
-                e.target.value = 'parent';
-            } else {
-                currentRole = e.target.value;
-                updateAnnouncementControls();
-                renderSchedule();
-            }
+            currentRole = e.target.value;
+            renderSchedule();
         });
-
-        function updateAnnouncementControls() {
-            const teacherControls = document.getElementById('teacherAnnouncementControls');
-            if (currentRole === 'teacher' && isTeacherAuthenticated) {
-                teacherControls.classList.remove('hidden');
-            } else {
-                teacherControls.classList.add('hidden');
-            }
-            renderAnnouncements();
-        }
 
         gradeSelect.addEventListener('change', (e) => {
             currentGrade = e.target.value;
@@ -737,33 +464,21 @@
         document.getElementById('prevWeek').addEventListener('click', () => {
             currentWeek--;
             updateWeekDisplay();
-            renderSchedule();
         });
 
         document.getElementById('nextWeek').addEventListener('click', () => {
             currentWeek++;
-            // Initialize new week if it doesn't exist
-            initializeWeek(currentGrade, currentSection, currentWeek);
             updateWeekDisplay();
-            renderSchedule();
         });
 
         document.getElementById('closeModal').addEventListener('click', closeModal);
         document.getElementById('cancelEdit').addEventListener('click', closeModal);
         document.getElementById('saveLesson').addEventListener('click', saveLesson);
-        document.getElementById('cancelLogin').addEventListener('click', hideTeacherLogin);
-        document.getElementById('confirmLogin').addEventListener('click', authenticateTeacher);
-        document.getElementById('addAnnouncementBtn').addEventListener('click', () => openAnnouncementModal());
-        document.getElementById('closeAnnouncementModal').addEventListener('click', closeAnnouncementModal);
-        document.getElementById('cancelAnnouncement').addEventListener('click', closeAnnouncementModal);
-        document.getElementById('saveAnnouncement').addEventListener('click', saveAnnouncement);
-        
-        teacherPassword.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                authenticateTeacher();
-            }
+        document.getElementById('printSchedule').addEventListener('click', () => {
+            window.print();
         });
-
+        
+        // Close modal when clicking outside
         lessonModal.addEventListener('click', (e) => {
             if (e.target === lessonModal) {
                 closeModal();
@@ -774,68 +489,66 @@
             const classData = scheduleData[currentGrade] && scheduleData[currentGrade][currentSection];
             if (!classData) return;
 
-            // Initialize current week if it doesn't exist
-            initializeWeek(currentGrade, currentSection, currentWeek);
-            
-            const weekData = classData.weeks[currentWeek];
-            if (!weekData) return;
-
-            const dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+            const periods = ['الحصة الأولى', 'الحصة الثانية', 'الحصة الثالثة', 'الحصة الرابعة', 'الحصة الخامسة', 'الحصة السادسة', 'الحصة السابعة'];
             const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday'];
-            const periods = 7; // 7 periods
             
             scheduleBody.innerHTML = '';
 
-            days.forEach((day, dayIndex) => {
+            periods.forEach((period, periodIndex) => {
                 const row = document.createElement('tr');
-                row.className = 'border-b-2 border-gray-100 hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 transition-all duration-300';
+                row.className = 'border-b border-gray-200 hover:bg-gray-50';
 
-                const dayCell = document.createElement('td');
-                dayCell.className = 'px-2 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 font-bold text-gray-800 bg-gradient-to-r from-gray-50 to-gray-100 border-l-4 border-blue-500 text-sm sm:text-base';
-                dayCell.textContent = dayNames[dayIndex];
-                row.appendChild(dayCell);
+                // Period name
+                const periodCell = document.createElement('td');
+                periodCell.className = 'px-6 py-4 font-semibold text-gray-700 bg-gray-50';
+                periodCell.textContent = period;
+                row.appendChild(periodCell);
 
-                for (let periodIndex = 0; periodIndex < periods; periodIndex++) {
+                // Days
+                days.forEach(day => {
                     const cell = document.createElement('td');
-                    cell.className = 'px-1 sm:px-3 lg:px-6 py-2 sm:py-3 lg:py-4 text-center';
+                    cell.className = 'px-6 py-4 text-center';
 
-                    const subject = weekData.schedule[day][periodIndex];
+                    const subject = classData.schedule[day][periodIndex];
                     
-                    if (subject === '') {
+                    if (subject === 'فسحة') {
+                        cell.innerHTML = '<span class="text-gray-500 italic">فسحة</span>';
+                        cell.className += ' bg-yellow-50';
+                    } else if (subject === '') {
+                        // Empty slot - only teachers can add subjects
                         if (currentRole === 'teacher') {
                             cell.innerHTML = `
-                                <div class="empty-slot subject-card cursor-pointer p-2 sm:p-3 lg:p-4 mx-1 hover-scale shadow-lg" 
-                                     onclick="openLessonModal('${day}', '${periodIndex + 1}', '')">
-                                    <div class="text-gray-600 font-bold text-xs sm:text-sm lg:text-lg">+ إضافة مادة</div>
-                                    <div class="flex justify-center mt-1 sm:mt-2">
-                                        <div class="w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-gray-400 rounded-full animate-pulse"></div>
+                                <div class="cursor-pointer p-2 rounded-lg transition-colors bg-blue-50 hover:bg-blue-100 border-2 border-dashed border-blue-300" 
+                                        onclick="openLessonModal('${day}', '${periodIndex + 1}', '')">
+                                    <div class="text-blue-600 text-sm font-semibold">+ إضافة مادة</div>
+                                    <div class="flex justify-center mt-2">
+                                        <span class="w-3 h-3 bg-blue-400 rounded-full"></span>
                                     </div>
                                 </div>
                             `;
                         } else {
                             cell.innerHTML = `
-                                <div class="empty-slot subject-card p-2 sm:p-3 lg:p-4 mx-1 shadow-lg">
-                                    <div class="text-gray-500 font-bold text-xs sm:text-sm">لم يتم تحديد المادة</div>
-                                    <div class="flex justify-center mt-1 sm:mt-2">
-                                        <div class="w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-gray-300 rounded-full"></div>
+                                <div class="p-2 rounded-lg bg-gray-50 border-2 border-dashed border-gray-300">
+                                    <div class="text-gray-400 text-sm">لم يتم تحديد المادة</div>
+                                    <div class="flex justify-center mt-2">
+                                        <span class="w-3 h-3 bg-gray-300 rounded-full"></span>
                                     </div>
                                 </div>
                             `;
                         }
                     } else {
-                        const lesson = weekData.lessons[day][String(periodIndex + 1)];
+                        const lesson = classData.lessons[day][String(periodIndex + 1)];
                         const isCompleted = lesson && lesson.completed;
-                        const colorClass = subjectColors[subject] || 'blue-gradient';
                         
                         cell.innerHTML = `
-                            <div class="subject-card cursor-pointer p-2 sm:p-3 lg:p-4 mx-1 hover-scale shadow-lg ${isCompleted ? colorClass : 'pending-lesson'}" 
-                                 onclick="openLessonModal('${day}', '${periodIndex + 1}', '${subject}')">
-                                <div class="font-bold text-xs sm:text-sm lg:text-lg text-white">${subject}</div>
-                                ${lesson && lesson.title ? `<div class="text-xs sm:text-sm text-white opacity-90 mt-1">${lesson.title}</div>` : '<div class="text-xs sm:text-sm text-white opacity-75 mt-1">لم يتم إضافة المحتوى</div>'}
-                                <div class="flex justify-center mt-1 sm:mt-2 lg:mt-3">
+                            <div class="cursor-pointer p-2 rounded-lg transition-colors ${isCompleted ? 'bg-green-100 hover:bg-green-200' : 'bg-gray-100 hover:bg-gray-200'}" 
+                                    onclick="openLessonModal('${day}', '${periodIndex + 1}', '${subject}')">
+                                <div class="font-semibold text-sm">${subject}</div>
+                                ${lesson && lesson.title ? `<div class="text-xs text-gray-600 mt-1">${lesson.title}</div>` : ''}
+                                <div class="flex justify-center mt-2">
                                     ${isCompleted ? 
-                                        '<div class="w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-white rounded-full shadow-inner"></div>' : 
-                                        '<div class="w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-white bg-opacity-50 rounded-full"></div>'
+                                        '<span class="w-3 h-3 bg-green-500 rounded-full"></span>' : 
+                                        '<span class="w-3 h-3 bg-gray-400 rounded-full"></span>'
                                     }
                                 </div>
                             </div>
@@ -843,7 +556,7 @@
                     }
                     
                     row.appendChild(cell);
-                }
+                });
 
                 scheduleBody.appendChild(row);
             });
@@ -853,8 +566,7 @@
 
         function openLessonModal(day, period, subject) {
             const classData = scheduleData[currentGrade][currentSection];
-            const weekData = classData.weeks[currentWeek];
-            const lesson = weekData.lessons[day][period];
+            const lesson = classData.lessons[day][period];
             
             if (subject === '') {
                 modalTitle.textContent = `إضافة مادة جديدة - ${getDayName(day)} - ${getGradeName(currentGrade)} شعبة ${currentSection}`;
@@ -866,6 +578,7 @@
                 teacherView.classList.remove('hidden');
                 parentView.classList.add('hidden');
                 
+                // Show/hide subject name field based on whether subject is empty
                 const subjectNameField = document.getElementById('subjectNameField');
                 const subjectNameInput = document.getElementById('subjectName');
                 
@@ -877,11 +590,13 @@
                     subjectNameInput.value = subject;
                 }
                 
+                // Populate teacher form
                 document.getElementById('lessonTitle').value = lesson.title || '';
                 document.getElementById('lessonContent').value = lesson.content || '';
                 document.getElementById('homework').value = lesson.homework || '';
                 document.getElementById('notes').value = lesson.notes || '';
                 
+                // Store current lesson info for saving
                 lessonModal.dataset.day = day;
                 lessonModal.dataset.period = period;
                 lessonModal.dataset.currentSubject = subject;
@@ -889,85 +604,52 @@
                 teacherView.classList.add('hidden');
                 parentView.classList.remove('hidden');
                 
+                // Populate parent view
                 if (lesson.completed && lesson.title) {
                     lessonDetails.innerHTML = `
-                        <div class="bg-gradient-to-r from-green-100 to-emerald-100 border-2 border-green-300 rounded-2xl p-4 sm:p-6 shadow-lg">
-                            <div class="flex items-center mb-4">
-                                <div class="green-gradient p-2 sm:p-3 rounded-full shadow-lg">
-                                    <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <span class="text-green-800 font-bold text-sm sm:text-xl mr-3 sm:mr-4">تم إنجاز الحصة بنجاح</span>
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div class="flex items-center mb-3">
+                                <svg class="w-5 h-5 text-green-600 ml-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span class="text-green-800 font-semibold">تم إنجاز الحصة</span>
                             </div>
                         </div>
                         
-                        <div class="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
-                            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-4 sm:p-6 border-2 border-blue-200">
-                                <h4 class="font-bold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-lg flex items-center">
-                                    <span class="blue-gradient p-1 sm:p-2 rounded-full mr-2 sm:mr-3">
-                                        <svg class="w-3 h-3 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </span>
-                                    عنوان الحصة:
-                                </h4>
-                                <p class="text-gray-700 bg-white p-3 sm:p-4 rounded-xl shadow-inner border text-sm sm:text-base">${lesson.title}</p>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">عنوان الحصة:</h4>
+                                <p class="text-gray-700 bg-gray-50 p-3 rounded-lg">${lesson.title}</p>
                             </div>
                             
-                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 sm:p-6 border-2 border-purple-200">
-                                <h4 class="font-bold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-lg flex items-center">
-                                    <span class="purple-gradient p-1 sm:p-2 rounded-full mr-2 sm:mr-3">
-                                        <svg class="w-3 h-3 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 102 0V3h4v1a1 1 0 102 0V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd"/>
-                                        </svg>
-                                    </span>
-                                    محتوى الحصة:
-                                </h4>
-                                <p class="text-gray-700 bg-white p-3 sm:p-4 rounded-xl shadow-inner border text-sm sm:text-base">${lesson.content}</p>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-2">محتوى الحصة:</h4>
+                                <p class="text-gray-700 bg-gray-50 p-3 rounded-lg">${lesson.content}</p>
                             </div>
                             
                             ${lesson.homework ? `
-                                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-4 sm:p-6 border-2 border-yellow-300">
-                                    <h4 class="font-bold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-lg flex items-center">
-                                        <span class="orange-gradient p-1 sm:p-2 rounded-full mr-2 sm:mr-3">
-                                            <svg class="w-3 h-3 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                                                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 102 0V3h4v1a1 1 0 102 0V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm8 8a1 1 0 100-2h1a1 1 0 100 2h-1z" clip-rule="evenodd"/>
-                                            </svg>
-                                        </span>
-                                        الواجبات المنزلية:
-                                    </h4>
-                                    <p class="text-gray-700 bg-white p-3 sm:p-4 rounded-xl shadow-inner border border-yellow-200 text-sm sm:text-base">${lesson.homework}</p>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-2">الواجبات المنزلية:</h4>
+                                    <p class="text-gray-700 bg-yellow-50 p-3 rounded-lg border border-yellow-200">${lesson.homework}</p>
                                 </div>
                             ` : ''}
                             
                             ${lesson.notes ? `
-                                <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-4 sm:p-6 border-2 border-indigo-200">
-                                    <h4 class="font-bold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-lg flex items-center">
-                                        <span class="blue-gradient p-1 sm:p-2 rounded-full mr-2 sm:mr-3">
-                                            <svg class="w-3 h-3 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                                            </svg>
-                                        </span>
-                                        ملاحظات المعلم:
-                                    </h4>
-                                    <p class="text-gray-700 bg-white p-3 sm:p-4 rounded-xl shadow-inner border border-indigo-200 text-sm sm:text-base">${lesson.notes}</p>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-2">ملاحظات المعلم:</h4>
+                                    <p class="text-gray-700 bg-blue-50 p-3 rounded-lg border border-blue-200">${lesson.notes}</p>
                                 </div>
                             ` : ''}
                         </div>
                     `;
                 } else {
                     lessonDetails.innerHTML = `
-                        <div class="bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-300 rounded-2xl p-6 sm:p-8 text-center shadow-lg">
-                            <div class="orange-gradient p-4 sm:p-6 rounded-full w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center shadow-xl">
-                                <svg class="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <h4 class="font-bold text-yellow-800 mb-3 sm:mb-4 text-lg sm:text-xl">لم يتم إضافة محتوى للحصة بعد</h4>
-                            <p class="text-yellow-700 text-sm sm:text-lg">سيقوم المعلم بإضافة تفاصيل الحصة قريباً إن شاء الله</p>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+                            <svg class="w-12 h-12 text-yellow-600 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <h4 class="font-semibold text-yellow-800 mb-2">لم يتم إضافة محتوى للحصة بعد</h4>
+                            <p class="text-yellow-700">سيقوم المعلم بإضافة تفاصيل الحصة قريباً</p>
                         </div>
                     `;
                 }
@@ -982,61 +664,27 @@
             lessonModal.classList.remove('flex');
         }
 
-        function showTeacherLogin() {
-            teacherLoginModal.classList.remove('hidden');
-            teacherLoginModal.classList.add('flex');
-            teacherPassword.value = '';
-            passwordError.classList.add('hidden');
-            teacherPassword.focus();
-        }
-
-        function hideTeacherLogin() {
-            teacherLoginModal.classList.add('hidden');
-            teacherLoginModal.classList.remove('flex');
-        }
-
-        function authenticateTeacher() {
-            const password = teacherPassword.value;
-            if (password === TEACHER_PASSWORD) {
-                isTeacherAuthenticated = true;
-                currentRole = 'teacher';
-                userRoleSelect.value = 'teacher';
-                hideTeacherLogin();
-                updateAnnouncementControls();
-                renderSchedule();
-                showNotification('تم تسجيل الدخول بنجاح! مرحباً بك في واجهة المعلم', 'success');
-            } else {
-                passwordError.classList.remove('hidden');
-                teacherPassword.value = '';
-                teacherPassword.focus();
-            }
-        }
-
         function saveLesson() {
             const day = lessonModal.dataset.day;
             const period = lessonModal.dataset.period;
             const currentSubject = lessonModal.dataset.currentSubject;
             
+            // Get the subject name (either existing or new)
             const subjectName = currentSubject === '' ? 
                 document.getElementById('subjectName').value.trim() : 
                 currentSubject;
             
+            // Validate subject name if it's a new subject
             if (currentSubject === '' && !subjectName) {
                 showNotification('يرجى إدخال اسم المادة', 'error');
                 return;
             }
             
-            const classData = scheduleData[currentGrade][currentSection];
-            const weekData = classData.weeks[currentWeek];
+            // Update the schedule with the subject name
+            scheduleData[currentGrade][currentSection].schedule[day][parseInt(period) - 1] = subjectName;
             
-            weekData.schedule[day][parseInt(period) - 1] = subjectName;
-            
-            // Add subject to subjects array if not already there
-            if (subjectName && !classData.subjects.includes(subjectName)) {
-                classData.subjects.push(subjectName);
-            }
-            
-            const lesson = weekData.lessons[day][period];
+            // Update lesson data
+            const lesson = scheduleData[currentGrade][currentSection].lessons[day][period];
             lesson.title = document.getElementById('lessonTitle').value;
             lesson.content = document.getElementById('lessonContent').value;
             lesson.homework = document.getElementById('homework').value;
@@ -1046,10 +694,11 @@
             renderSchedule();
             closeModal();
             
+            // Show success message
             if (currentSubject === '') {
-                showNotification('تم إضافة المادة والحصة بنجاح! 🎉', 'success');
+                showNotification('تم إضافة المادة والحصة بنجاح!', 'success');
             } else {
-                showNotification('تم حفظ الحصة بنجاح! ✅', 'success');
+                showNotification('تم حفظ الحصة بنجاح!', 'success');
             }
         }
 
@@ -1075,23 +724,20 @@
 
         function updateStatistics() {
             const classData = scheduleData[currentGrade][currentSection];
-            const weekData = classData.weeks[currentWeek];
             let completed = 0;
             let pending = 0;
             let total = 0;
 
-            if (weekData && weekData.lessons) {
-                Object.values(weekData.lessons).forEach(dayLessons => {
-                    Object.values(dayLessons).forEach(lesson => {
-                        total++;
-                        if (lesson.completed) {
-                            completed++;
-                        } else {
-                            pending++;
-                        }
-                    });
+            Object.values(classData.lessons).forEach(dayLessons => {
+                Object.values(dayLessons).forEach(lesson => {
+                    total++;
+                    if (lesson.completed) {
+                        completed++;
+                    } else {
+                        pending++;
+                    }
                 });
-            }
+            });
 
             document.getElementById('completedLessons').textContent = completed;
             document.getElementById('pendingLessons').textContent = pending;
@@ -1102,15 +748,20 @@
             const weekElement = document.getElementById('currentWeek');
             const datesElement = document.getElementById('weekDates');
             
+            // Hijri months for Saudi academic calendar 1447
             const hijriMonths = [
                 'محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 
                 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'
             ];
             
-            const baseWeekStart = 1;
-            const baseMonth = 2;
+            // بداية العام الدراسي 1447هـ حسب وزارة التعليم السعودية: 1 ربيع الأول 1447هـ
+            const baseWeekStart = 1; // 1 ربيع الأول 1447هـ (بداية الأسبوع الأول)
+            const baseMonth = 2; // ربيع الأول (الشهر الثالث في التقويم الهجري)
+            
+            // حساب رقم الأسبوع الدراسي (الأسبوع الأول = 1)
             const weekNumber = currentWeek + 1;
             
+            // تحويل الأرقام إلى كلمات عربية
             const weekNames = {
                 1: 'الأول', 2: 'الثاني', 3: 'الثالث', 4: 'الرابع', 5: 'الخامس',
                 6: 'السادس', 7: 'السابع', 8: 'الثامن', 9: 'التاسع', 10: 'العاشر',
@@ -1125,7 +776,8 @@
             } else {
                 weekElement.textContent = 'قبل بداية العام الدراسي';
             }
-
+            
+            // حساب التواريخ
             const startDate = baseWeekStart + (currentWeek * 7);
             const endDate = startDate + 4;
             
@@ -1138,21 +790,25 @@
                 return;
             }
             
+            // إذا تجاوز التاريخ 30 يوم، انتقل للشهر التالي
             while (adjustedStartDate > 30) {
                 adjustedStartDate -= 30;
                 adjustedEndDate -= 30;
                 currentMonth++;
-                if (currentMonth > 11) currentMonth = 0;
+                if (currentMonth > 11) currentMonth = 0; // العودة لمحرم
             }
             
+            // إذا كان التاريخ سالب، اذهب للشهر السابق
             while (adjustedStartDate <= 0) {
                 adjustedStartDate += 30;
                 adjustedEndDate += 30;
                 currentMonth--;
-                if (currentMonth < 0) currentMonth = 11;
+                if (currentMonth < 0) currentMonth = 11; // العودة لذو الحجة
             }
             
             if (adjustedEndDate > 30) {
+                // الأسبوع يمتد عبر شهرين
+                const daysInFirstMonth = 30 - adjustedStartDate + 1;
                 const daysInSecondMonth = adjustedEndDate - 30;
                 const nextMonth = currentMonth + 1 > 11 ? 0 : currentMonth + 1;
                 datesElement.textContent = `${adjustedStartDate}-30 ${hijriMonths[currentMonth]} / 1-${daysInSecondMonth} ${hijriMonths[nextMonth]} 1447هـ`;
@@ -1163,172 +819,19 @@
 
         function showNotification(message, type) {
             const notification = document.createElement('div');
-            notification.className = `fixed top-6 left-1/2 transform -translate-x-1/2 z-50 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl shadow-2xl text-white font-bold text-sm sm:text-lg ${type === 'success' ? 'green-gradient' : 'red-gradient'} fade-in border-2 ${type === 'success' ? 'border-green-300' : 'border-red-300'}`;
+            notification.className = `fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg text-white ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} fade-in`;
             notification.textContent = message;
             
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transform = 'translate(-50%, -20px)';
-                setTimeout(() => notification.remove(), 300);
+                notification.remove();
             }, 3000);
-        }
-
-        function renderAnnouncements() {
-            const announcementsList = document.getElementById('announcementsList');
-            
-            if (announcements.length === 0) {
-                announcementsList.innerHTML = `
-                    <div class="bg-gradient-to-r from-gray-100 to-gray-200 border-2 border-gray-300 rounded-2xl p-6 sm:p-8 text-center shadow-lg">
-                        <div class="text-gray-500 text-lg sm:text-xl font-bold mb-2">لا توجد إعلانات حالياً</div>
-                        <div class="text-gray-400 text-sm sm:text-base">سيتم إضافة الإعلانات هنا عند توفرها</div>
-                    </div>
-                `;
-                return;
-            }
-            
-            const colorClasses = {
-                blue: { bg: 'from-blue-50 to-cyan-50', border: 'border-blue-200', text: 'text-blue-800', badge: 'bg-blue-100 text-blue-600', date: 'text-blue-500' },
-                green: { bg: 'from-green-50 to-emerald-50', border: 'border-green-200', text: 'text-green-800', badge: 'bg-green-100 text-green-600', date: 'text-green-500' },
-                red: { bg: 'from-red-50 to-pink-50', border: 'border-red-200', text: 'text-red-800', badge: 'bg-red-100 text-red-600', date: 'text-red-500' },
-                orange: { bg: 'from-orange-50 to-yellow-50', border: 'border-orange-200', text: 'text-orange-800', badge: 'bg-orange-100 text-orange-600', date: 'text-orange-500' },
-                purple: { bg: 'from-purple-50 to-pink-50', border: 'border-purple-200', text: 'text-purple-800', badge: 'bg-purple-100 text-purple-600', date: 'text-purple-500' },
-                cyan: { bg: 'from-cyan-50 to-blue-50', border: 'border-cyan-200', text: 'text-cyan-800', badge: 'bg-cyan-100 text-cyan-600', date: 'text-cyan-500' }
-            };
-            
-            announcementsList.innerHTML = announcements.map(announcement => {
-                const colors = colorClasses[announcement.color] || colorClasses.blue;
-                const isTeacher = currentRole === 'teacher' && isTeacherAuthenticated;
-                
-                return `
-                    <div class="bg-gradient-to-r ${colors.bg} border-2 ${colors.border} rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 sm:mb-3">
-                            <h4 class="font-bold ${colors.text} text-sm sm:text-lg mb-2 sm:mb-0 flex-1 ml-2">${announcement.title}</h4>
-                            <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 sm:space-x-reverse">
-                                <span class="${colors.badge} text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full font-bold">${announcement.type}</span>
-                                ${isTeacher ? `
-                                    <div class="flex space-x-1 space-x-reverse">
-                                        <button onclick="editAnnouncement(${announcement.id})" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg transition-colors text-xs sm:text-sm">
-                                            <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
-                                            </svg>
-                                        </button>
-                                        <button onclick="deleteAnnouncement(${announcement.id})" class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition-colors text-xs sm:text-sm">
-                                            <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                ` : ''}
-                            </div>
-                        </div>
-                        <p class="${colors.text} text-sm sm:text-base leading-relaxed">${announcement.content}</p>
-                        <div class="${colors.date} text-xs sm:text-sm mt-2 sm:mt-3 font-medium">📅 تاريخ النشر: ${announcement.date}</div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function openAnnouncementModal(announcementId = null) {
-            currentAnnouncementId = announcementId;
-            const modal = document.getElementById('announcementModal');
-            const title = document.getElementById('announcementModalTitle');
-            
-            if (announcementId) {
-                const announcement = announcements.find(a => a.id === announcementId);
-                if (announcement) {
-                    title.textContent = 'تعديل الإعلان';
-                    document.getElementById('announcementTitle').value = announcement.title;
-                    document.getElementById('announcementContent').value = announcement.content;
-                    document.getElementById('announcementType').value = announcement.type;
-                    document.getElementById('announcementColor').value = announcement.color;
-                    document.getElementById('announcementDate').value = announcement.date;
-                }
-            } else {
-                title.textContent = 'إضافة إعلان جديد';
-                document.getElementById('announcementTitle').value = '';
-                document.getElementById('announcementContent').value = '';
-                document.getElementById('announcementType').value = 'عام';
-                document.getElementById('announcementColor').value = 'blue';
-                
-                // Set default date to current Hijri date
-                const currentDate = new Date();
-                const hijriDate = `${currentDate.getDate()} ${['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'][currentDate.getMonth()]} 1447هـ`;
-                document.getElementById('announcementDate').value = hijriDate;
-            }
-            
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function closeAnnouncementModal() {
-            const modal = document.getElementById('announcementModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            currentAnnouncementId = null;
-        }
-
-        function saveAnnouncement() {
-            const title = document.getElementById('announcementTitle').value.trim();
-            const content = document.getElementById('announcementContent').value.trim();
-            const type = document.getElementById('announcementType').value;
-            const color = document.getElementById('announcementColor').value;
-            const date = document.getElementById('announcementDate').value.trim();
-            
-            if (!title || !content || !date) {
-                showNotification('يرجى ملء جميع الحقول المطلوبة', 'error');
-                return;
-            }
-            
-            if (currentAnnouncementId) {
-                // Edit existing announcement
-                const index = announcements.findIndex(a => a.id === currentAnnouncementId);
-                if (index !== -1) {
-                    announcements[index] = {
-                        ...announcements[index],
-                        title,
-                        content,
-                        type,
-                        color,
-                        date
-                    };
-                    showNotification('تم تحديث الإعلان بنجاح! ✅', 'success');
-                }
-            } else {
-                // Add new announcement
-                const newAnnouncement = {
-                    id: nextAnnouncementId++,
-                    title,
-                    content,
-                    type,
-                    color,
-                    date
-                };
-                announcements.unshift(newAnnouncement);
-                showNotification('تم إضافة الإعلان بنجاح! 🎉', 'success');
-            }
-            
-            renderAnnouncements();
-            closeAnnouncementModal();
-        }
-
-        function editAnnouncement(id) {
-            openAnnouncementModal(id);
-        }
-
-        function deleteAnnouncement(id) {
-            if (confirm('هل أنت متأكد من حذف هذا الإعلان؟')) {
-                announcements = announcements.filter(a => a.id !== id);
-                renderAnnouncements();
-                showNotification('تم حذف الإعلان بنجاح! 🗑️', 'success');
-            }
         }
 
         // Initialize the page
         renderSchedule();
         updateWeekDisplay();
-        renderAnnouncements();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9811b9363678357d',t:'MTc1ODIwNzczOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
