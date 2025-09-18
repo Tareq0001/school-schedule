@@ -106,45 +106,134 @@
 
         /* Mobile optimizations */
         @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+                -webkit-text-size-adjust: 100%;
+            }
+            
             .subject-card {
-                min-height: 80px;
-                padding: 12px !important;
+                min-height: 90px;
+                padding: 16px !important;
+                margin: 4px;
+                border-radius: 16px;
             }
             
             .subject-card .font-bold {
-                font-size: 14px !important;
-                line-height: 1.2;
+                font-size: 16px !important;
+                line-height: 1.3;
+                margin-bottom: 4px;
             }
             
             .subject-card .text-sm {
-                font-size: 12px !important;
-                line-height: 1.3;
+                font-size: 14px !important;
+                line-height: 1.4;
             }
             
             /* Better touch targets */
-            .subject-card {
-                min-height: 80px;
-                margin: 2px;
+            button, .subject-card {
+                min-height: 56px;
+                touch-action: manipulation;
             }
             
             /* Larger buttons for mobile */
             button {
-                min-height: 48px;
-                padding: 12px 16px !important;
+                padding: 16px 20px !important;
+                font-size: 16px !important;
+                border-radius: 12px;
             }
             
             /* Better table spacing on mobile */
+            table {
+                font-size: 14px;
+            }
+            
+            table th {
+                padding: 12px 6px !important;
+                font-size: 12px !important;
+                line-height: 1.2;
+            }
+            
             table td {
                 padding: 8px 4px !important;
+                vertical-align: middle;
+            }
+            
+            /* Header improvements for mobile */
+            .container {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
+            
+            /* Modal improvements */
+            .modal-backdrop .bg-white {
+                margin: 16px;
+                max-height: calc(100vh - 32px);
+            }
+            
+            /* Form improvements */
+            input, textarea, select {
+                font-size: 16px !important;
+                padding: 16px !important;
+                border-radius: 12px;
             }
             
             /* Responsive text sizes */
+            .text-xs { font-size: 14px !important; }
+            .text-sm { font-size: 16px !important; }
+            .text-base { font-size: 18px !important; }
+            .text-lg { font-size: 20px !important; }
+            .text-xl { font-size: 22px !important; }
+            .text-2xl { font-size: 26px !important; }
+            .text-3xl { font-size: 30px !important; }
+            
+            /* Announcement cards mobile optimization */
+            .space-y-3 > * + * {
+                margin-top: 16px !important;
+            }
+            
+            /* Better spacing for mobile */
+            .py-4 { padding-top: 20px !important; padding-bottom: 20px !important; }
+            .py-6 { padding-top: 24px !important; padding-bottom: 24px !important; }
+            .py-8 { padding-top: 32px !important; padding-bottom: 32px !important; }
+            
+            .px-4 { padding-left: 20px !important; padding-right: 20px !important; }
+            .px-6 { padding-left: 24px !important; padding-right: 24px !important; }
+            .px-8 { padding-left: 32px !important; padding-right: 32px !important; }
+            
+            /* Week navigation mobile */
+            .flex.items-center.space-x-4 {
+                gap: 16px;
+            }
+            
+            /* Statistics cards mobile */
+            .grid.grid-cols-1.md\\:grid-cols-3 {
+                gap: 16px;
+            }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 480px) {
             .text-xs { font-size: 12px !important; }
             .text-sm { font-size: 14px !important; }
             .text-base { font-size: 16px !important; }
             .text-lg { font-size: 18px !important; }
             .text-xl { font-size: 20px !important; }
-            .text-2xl { font-size: 24px !important; }
+            .text-2xl { font-size: 22px !important; }
+            
+            .subject-card {
+                min-height: 80px;
+                padding: 12px !important;
+            }
+            
+            table th {
+                font-size: 10px !important;
+                padding: 8px 2px !important;
+            }
+            
+            .container {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
         }
     </style>
 </head>
@@ -279,24 +368,7 @@
             </div>
             
             <div id="announcementsList" class="space-y-3 sm:space-y-4">
-                <!-- Default announcements -->
-                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-2xl p-4 sm:p-6 shadow-lg">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 sm:mb-3">
-                        <h4 class="font-bold text-blue-800 text-sm sm:text-lg mb-1 sm:mb-0">مرحباً بكم في العام الدراسي الجديد 1447هـ</h4>
-                        <span class="text-blue-600 text-xs sm:text-sm bg-blue-100 px-2 sm:px-3 py-1 rounded-full">عام</span>
-                    </div>
-                    <p class="text-blue-700 text-sm sm:text-base">نتمنى لجميع الطلاب والطالبات عاماً دراسياً مليئاً بالنجاح والتفوق. نرحب بكم في مدرسة متوسطة أبها الأهلية.</p>
-                    <div class="text-blue-500 text-xs sm:text-sm mt-2 sm:mt-3">📅 تاريخ النشر: 1 ربيع الأول 1447هـ</div>
-                </div>
-                
-                <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-4 sm:p-6 shadow-lg">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 sm:mb-3">
-                        <h4 class="font-bold text-green-800 text-sm sm:text-lg mb-1 sm:mb-0">مواعيد الاختبارات الشهرية</h4>
-                        <span class="text-green-600 text-xs sm:text-sm bg-green-100 px-2 sm:px-3 py-1 rounded-full">مهم</span>
-                    </div>
-                    <p class="text-green-700 text-sm sm:text-base">ستبدأ الاختبارات الشهرية للفصل الدراسي الأول يوم الأحد الموافق 15 ربيع الآخر 1447هـ. يرجى مراجعة الجدول الزمني للاختبارات.</p>
-                    <div class="text-green-500 text-xs sm:text-sm mt-2 sm:mt-3">📅 تاريخ النشر: 5 ربيع الأول 1447هـ</div>
-                </div>
+                <!-- Announcements will be populated by JavaScript -->
             </div>
         </div>
 
@@ -400,6 +472,68 @@
         </div>
     </div>
 
+    <!-- Announcement Modal -->
+    <div id="announcementModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal-backdrop z-50 items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200">
+            <div class="gradient-bg text-white p-4 sm:p-6 rounded-t-2xl">
+                <div class="flex justify-between items-center">
+                    <h2 id="announcementModalTitle" class="text-lg sm:text-2xl font-bold">إضافة إعلان جديد</h2>
+                    <button id="closeAnnouncementModal" class="text-white hover:text-gray-200 transition-colors p-2 hover:bg-white hover:bg-opacity-20 rounded-full">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-4 sm:p-6">
+                <form class="space-y-4 sm:space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">عنوان الإعلان</label>
+                        <input type="text" id="announcementTitle" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل عنوان الإعلان">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">محتوى الإعلان</label>
+                        <textarea id="announcementContent" rows="4" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base" placeholder="أدخل محتوى الإعلان"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">نوع الإعلان</label>
+                        <select id="announcementType" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base">
+                            <option value="عام">عام</option>
+                            <option value="مهم">مهم</option>
+                            <option value="عاجل">عاجل</option>
+                            <option value="اختبارات">اختبارات</option>
+                            <option value="أنشطة">أنشطة</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">لون الإعلان</label>
+                        <select id="announcementColor" class="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base">
+                            <option value="blue">أزرق</option>
+                            <option value="green">أخضر</option>
+                            <option value="red">أحمر</option>
+                            <option value="orange">برتقالي</option>
+                            <option value="purple">بنفسجي</option>
+                            <option value="cyan">سماوي</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse pt-4">
+                        <button type="button" id="saveAnnouncement" class="flex-1 green-gradient text-white font-bold py-3 sm:py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
+                            حفظ الإعلان
+                        </button>
+                        <button type="button" id="cancelAnnouncement" class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-bold py-3 sm:py-4 px-6 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base">
+                            إلغاء
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Teacher Login Modal -->
     <div id="teacherLoginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal-backdrop z-50 items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-gray-200">
@@ -441,6 +575,26 @@
     </div>
 
     <script>
+        // Announcements data
+        let announcements = [
+            {
+                id: 1,
+                title: 'مرحباً بكم في العام الدراسي الجديد 1447هـ',
+                content: 'نتمنى لجميع الطلاب والطالبات عاماً دراسياً مليئاً بالنجاح والتفوق. نرحب بكم في مدرسة متوسطة أبها الأهلية.',
+                type: 'عام',
+                date: '1 ربيع الأول 1447هـ',
+                color: 'blue'
+            },
+            {
+                id: 2,
+                title: 'مواعيد الاختبارات الشهرية',
+                content: 'ستبدأ الاختبارات الشهرية للفصل الدراسي الأول يوم الأحد الموافق 15 ربيع الآخر 1447هـ. يرجى مراجعة الجدول الزمني للاختبارات.',
+                type: 'مهم',
+                date: '5 ربيع الأول 1447هـ',
+                color: 'green'
+            }
+        ];
+
         // Sample schedule data structure with weekly data
         const scheduleData = {
             '1': {
@@ -510,7 +664,9 @@
         let currentRole = 'parent';
         let currentWeek = 0;
         let isTeacherAuthenticated = false;
-        const TEACHER_PASSWORD = 'ابها الاهلية2025';
+        const TEACHER_PASSWORD = '123459876';
+        let currentAnnouncementId = null;
+        let nextAnnouncementId = 3;
 
         // DOM elements
         const userRoleSelect = document.getElementById('userRole');
@@ -560,6 +716,7 @@
             } else {
                 teacherControls.classList.add('hidden');
             }
+            renderAnnouncements();
         }
 
         gradeSelect.addEventListener('change', (e) => {
@@ -591,6 +748,10 @@
         document.getElementById('saveLesson').addEventListener('click', saveLesson);
         document.getElementById('cancelLogin').addEventListener('click', hideTeacherLogin);
         document.getElementById('confirmLogin').addEventListener('click', authenticateTeacher);
+        document.getElementById('addAnnouncementBtn').addEventListener('click', () => openAnnouncementModal());
+        document.getElementById('closeAnnouncementModal').addEventListener('click', closeAnnouncementModal);
+        document.getElementById('cancelAnnouncement').addEventListener('click', closeAnnouncementModal);
+        document.getElementById('saveAnnouncement').addEventListener('click', saveAnnouncement);
         
         teacherPassword.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
@@ -1009,9 +1170,155 @@
             }, 3000);
         }
 
+        function renderAnnouncements() {
+            const announcementsList = document.getElementById('announcementsList');
+            
+            if (announcements.length === 0) {
+                announcementsList.innerHTML = `
+                    <div class="bg-gradient-to-r from-gray-100 to-gray-200 border-2 border-gray-300 rounded-2xl p-6 sm:p-8 text-center shadow-lg">
+                        <div class="text-gray-500 text-lg sm:text-xl font-bold mb-2">لا توجد إعلانات حالياً</div>
+                        <div class="text-gray-400 text-sm sm:text-base">سيتم إضافة الإعلانات هنا عند توفرها</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const colorClasses = {
+                blue: { bg: 'from-blue-50 to-cyan-50', border: 'border-blue-200', text: 'text-blue-800', badge: 'bg-blue-100 text-blue-600', date: 'text-blue-500' },
+                green: { bg: 'from-green-50 to-emerald-50', border: 'border-green-200', text: 'text-green-800', badge: 'bg-green-100 text-green-600', date: 'text-green-500' },
+                red: { bg: 'from-red-50 to-pink-50', border: 'border-red-200', text: 'text-red-800', badge: 'bg-red-100 text-red-600', date: 'text-red-500' },
+                orange: { bg: 'from-orange-50 to-yellow-50', border: 'border-orange-200', text: 'text-orange-800', badge: 'bg-orange-100 text-orange-600', date: 'text-orange-500' },
+                purple: { bg: 'from-purple-50 to-pink-50', border: 'border-purple-200', text: 'text-purple-800', badge: 'bg-purple-100 text-purple-600', date: 'text-purple-500' },
+                cyan: { bg: 'from-cyan-50 to-blue-50', border: 'border-cyan-200', text: 'text-cyan-800', badge: 'bg-cyan-100 text-cyan-600', date: 'text-cyan-500' }
+            };
+            
+            announcementsList.innerHTML = announcements.map(announcement => {
+                const colors = colorClasses[announcement.color] || colorClasses.blue;
+                const isTeacher = currentRole === 'teacher' && isTeacherAuthenticated;
+                
+                return `
+                    <div class="bg-gradient-to-r ${colors.bg} border-2 ${colors.border} rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 sm:mb-3">
+                            <h4 class="font-bold ${colors.text} text-sm sm:text-lg mb-2 sm:mb-0 flex-1 ml-2">${announcement.title}</h4>
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 sm:space-x-reverse">
+                                <span class="${colors.badge} text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full font-bold">${announcement.type}</span>
+                                ${isTeacher ? `
+                                    <div class="flex space-x-1 space-x-reverse">
+                                        <button onclick="editAnnouncement(${announcement.id})" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg transition-colors text-xs sm:text-sm">
+                                            <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                                            </svg>
+                                        </button>
+                                        <button onclick="deleteAnnouncement(${announcement.id})" class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition-colors text-xs sm:text-sm">
+                                            <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        <p class="${colors.text} text-sm sm:text-base leading-relaxed">${announcement.content}</p>
+                        <div class="${colors.date} text-xs sm:text-sm mt-2 sm:mt-3 font-medium">📅 تاريخ النشر: ${announcement.date}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openAnnouncementModal(announcementId = null) {
+            currentAnnouncementId = announcementId;
+            const modal = document.getElementById('announcementModal');
+            const title = document.getElementById('announcementModalTitle');
+            
+            if (announcementId) {
+                const announcement = announcements.find(a => a.id === announcementId);
+                if (announcement) {
+                    title.textContent = 'تعديل الإعلان';
+                    document.getElementById('announcementTitle').value = announcement.title;
+                    document.getElementById('announcementContent').value = announcement.content;
+                    document.getElementById('announcementType').value = announcement.type;
+                    document.getElementById('announcementColor').value = announcement.color;
+                }
+            } else {
+                title.textContent = 'إضافة إعلان جديد';
+                document.getElementById('announcementTitle').value = '';
+                document.getElementById('announcementContent').value = '';
+                document.getElementById('announcementType').value = 'عام';
+                document.getElementById('announcementColor').value = 'blue';
+            }
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAnnouncementModal() {
+            const modal = document.getElementById('announcementModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            currentAnnouncementId = null;
+        }
+
+        function saveAnnouncement() {
+            const title = document.getElementById('announcementTitle').value.trim();
+            const content = document.getElementById('announcementContent').value.trim();
+            const type = document.getElementById('announcementType').value;
+            const color = document.getElementById('announcementColor').value;
+            
+            if (!title || !content) {
+                showNotification('يرجى ملء جميع الحقول المطلوبة', 'error');
+                return;
+            }
+            
+            const currentDate = new Date();
+            const hijriDate = `${currentDate.getDate()} ${['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'][currentDate.getMonth()]} 1447هـ`;
+            
+            if (currentAnnouncementId) {
+                // Edit existing announcement
+                const index = announcements.findIndex(a => a.id === currentAnnouncementId);
+                if (index !== -1) {
+                    announcements[index] = {
+                        ...announcements[index],
+                        title,
+                        content,
+                        type,
+                        color
+                    };
+                    showNotification('تم تحديث الإعلان بنجاح! ✅', 'success');
+                }
+            } else {
+                // Add new announcement
+                const newAnnouncement = {
+                    id: nextAnnouncementId++,
+                    title,
+                    content,
+                    type,
+                    color,
+                    date: hijriDate
+                };
+                announcements.unshift(newAnnouncement);
+                showNotification('تم إضافة الإعلان بنجاح! 🎉', 'success');
+            }
+            
+            renderAnnouncements();
+            closeAnnouncementModal();
+        }
+
+        function editAnnouncement(id) {
+            openAnnouncementModal(id);
+        }
+
+        function deleteAnnouncement(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الإعلان؟')) {
+                announcements = announcements.filter(a => a.id !== id);
+                renderAnnouncements();
+                showNotification('تم حذف الإعلان بنجاح! 🗑️', 'success');
+            }
+        }
+
         // Initialize the page
         renderSchedule();
         updateWeekDisplay();
+        renderAnnouncements();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98119fbd03d32cf9',t:'MTc1ODIwNjY5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9811ae7a12179f72',t:'MTc1ODIwNzI5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
