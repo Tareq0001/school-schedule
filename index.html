@@ -21,18 +21,27 @@
 <body class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
 
     <header class="bg-main text-white shadow-lg">
-        <div class="container mx-auto px-4 py-6 flex items-center justify-between">
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <img src="https://mwahib.edu.sa/wp-content/uploads/2022/02/Artboard-%D9%A١.png" alt="شعار مواهب التربية" class="h-12 w-auto bg-white rounded p-1">
-                <div><h1 class="text-2xl font-bold">الجدول الدراسي</h1><p class="text-blue-100">مواهب التربية - أبها الأهلية</p></div>
-            </div>
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <button id="prevWeek" class="bg-white bg-opacity-20 hover:bg-opacity-30 p-2 rounded">←</button>
-                <div id="currentWeek" class="text-center font-bold">الأسبوع ...</div>
-                <button id="nextWeek" class="bg-white bg-opacity-20 hover:bg-opacity-30 p-2 rounded">→</button>
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-Vq-W1kYDrap9R9evZFp4qMiFYqXT6hk3A&s" alt="شعار وزارة التعليم" class="h-12 w-12 bg-white rounded-full p-1">
+                        <img src="https://mwahib.edu.sa/wp-content/uploads/2022/02/Artboard-%D9%A1.png" alt="شعار مواهب التربية" class="h-12 w-auto bg-white rounded p-1">
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">الجدول الدراسي</h1>
+                        <p class="text-blue-100">مواهب التربية - أبها الأهلية</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <button id="prevWeek" class="bg-white bg-opacity-20 hover:bg-opacity-30 p-2 rounded">←</button>
+                    <div id="currentWeek" class="text-center font-bold">الأسبوع ...</div>
+                    <button id="nextWeek" class="bg-white bg-opacity-20 hover:bg-opacity-30 p-2 rounded">→</button>
+                </div>
             </div>
         </div>
     </header>
+
     <div class="container mx-auto px-4 py-4">
         <div class="bg-white rounded-lg shadow p-4 mb-4">
             <div class="grid grid-cols-3 gap-4">
@@ -49,6 +58,7 @@
             <div id="announcementsList"><div class="text-gray-500 text-center p-4">جاري تحميل الإعلانات...</div></div>
         </div>
     </div>
+    
     <div id="lessonModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"><div class="bg-white rounded-lg max-w-2xl w-full"><div class="bg-main text-white p-4 flex justify-between items-center"><h2 id="modalTitle" class="font-bold">تفاصيل الحصة</h2><button id="closeModal" class="text-white">✕</button></div><div class="p-4" id="modalContent"></div></div></div>
     <div id="teacherLoginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"><div class="bg-white rounded-lg max-w-sm w-full"><div class="bg-main text-white p-4 text-center"><h2 class="font-bold">تسجيل دخول المعلم</h2></div><div class="p-4 space-y-4"><input type="password" id="teacherPassword" class="w-full p-2 border rounded" placeholder="كلمة المرور"><div id="passwordError" class="hidden text-red-600 text-sm">كلمة المرور غير صحيحة.</div><div class="flex space-x-2 space-x-reverse"><button id="confirmLogin" class="flex-1 bg-main text-white p-2 rounded">دخول</button><button id="cancelLogin" class="flex-1 bg-gray-500 text-white p-2 rounded">إلغاء</button></div></div></div></div>
     <div id="announcementModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"><div class="bg-white rounded-lg max-w-md w-full"><div class="bg-main text-white p-4 flex justify-between items-center"><h2 id="announcementModalTitle" class="font-bold">إضافة إعلان</h2><button id="closeAnnouncementModal" class="text-white">✕</button></div><div class="p-4 space-y-4"><div><label class="block text-sm font-bold">العنوان*</label><input type="text" id="announcementTitle" class="w-full p-2 border rounded"></div><div><label class="block text-sm font-bold">المحتوى*</label><textarea id="announcementContent" rows="4" class="w-full p-2 border rounded"></textarea></div><div class="flex space-x-2 space-x-reverse"><button id="saveAnnouncement" class="flex-1 bg-green-500 text-white p-2 rounded">حفظ</button><button id="cancelAnnouncement" class="flex-1 bg-gray-500 text-white p-2 rounded">إلغاء</button></div></div></div></div>
@@ -70,63 +80,82 @@
     </script>
 
     <script>
-        // Global State
-        let currentGrade = '1', currentSection = 'أ', currentRole = 'parent', currentWeek = 4;
-        let isTeacherAuthenticated = false;
-        let unsubscribeAnnouncements = null;
+        document.addEventListener('DOMContentLoaded', () => {
+            // Global State
+            let currentGrade = '1', currentSection = 'أ', currentRole = 'parent', currentWeek = 4; // Week starts at 0 internally
+            let isTeacherAuthenticated = false;
+            let unsubscribeAnnouncements = null;
 
-        // Toast Notification Manager
-        class ToastManager {
-            constructor() { this.container = document.getElementById('toastContainer'); }
-            show(message, type = 'info', title = '') { const toast = document.createElement('div'); toast.className = `toast ${type}`; const icons = { success: '✅', error: '❌' }; const titles = { success: title || 'نجاح', error: title || 'خطأ' }; toast.innerHTML = `<div class="toast-icon">${icons[type]}</div><div><div class="font-bold">${titles[type]}</div><div class="text-sm">${message}</div></div>`; this.container.appendChild(toast); setTimeout(() => toast.classList.add('show'), 100); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 500); }, 4000); }
-            success(message, title) { this.show(message, 'success', title); }
-            error(message, title) { this.show(message, 'error', title); }
-        }
-        const toastManager = new ToastManager();
+            // DOM Elements
+            const elements = {
+                userRole: document.getElementById('userRole'),
+                gradeSelect: document.getElementById('gradeSelect'),
+                sectionSelect: document.getElementById('sectionSelect'),
+                prevWeekBtn: document.getElementById('prevWeek'),
+                nextWeekBtn: document.getElementById('nextWeek'),
+                currentWeekDisplay: document.getElementById('currentWeek'),
+                scheduleBody: document.getElementById('scheduleBody'),
+                announcementsList: document.getElementById('announcementsList'),
+                addAnnouncementBtn: document.getElementById('addAnnouncementBtn'),
+                lessonModal: document.getElementById('lessonModal'),
+                modalTitle: document.getElementById('modalTitle'),
+                modalContent: document.getElementById('modalContent'),
+                closeModalBtn: document.getElementById('closeModal'),
+                loginModal: document.getElementById('teacherLoginModal'),
+                confirmLoginBtn: document.getElementById('confirmLogin'),
+                cancelLoginBtn: document.getElementById('cancelLogin'),
+                passwordInput: document.getElementById('teacherPassword'),
+                passwordError: document.getElementById('passwordError'),
+                announcementModal: document.getElementById('announcementModal'),
+                announcementModalTitle: document.getElementById('announcementModalTitle'),
+                announcementTitleInput: document.getElementById('announcementTitle'),
+                announcementContentInput: document.getElementById('announcementContent'),
+                saveAnnouncementBtn: document.getElementById('saveAnnouncement'),
+                cancelAnnouncementBtn: document.getElementById('cancelAnnouncement'),
+                closeAnnouncementModalBtn: document.getElementById('closeAnnouncementModal'),
+                toastContainer: document.getElementById('toastContainer')
+            };
 
-        // --- Core Functions ---
-        async function renderSchedule() {
-            const docId = `${currentGrade}-${currentSection}-week${currentWeek}`;
-            const docRef = db.collection('schedules').doc(docId);
-            try {
-                const doc = await docRef.get();
-                const weekData = doc.exists ? doc.data() : { lessons: {} };
-                const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday'];
-                const dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
-                const scheduleBody = document.getElementById('scheduleBody');
-                scheduleBody.innerHTML = ''; 
+            // Toast Notification Manager
+            class ToastManager {
+                show(message, type = 'info', title = '') { const toast = document.createElement('div'); toast.className = `toast ${type}`; const icons = { success: '✅', error: '❌' }; const titles = { success: title || 'نجاح', error: title || 'خطأ' }; toast.innerHTML = `<div class="toast-icon">${icons[type]}</div><div><div class="font-bold">${titles[type]}</div><div class="text-sm">${message}</div></div>`; elements.toastContainer.appendChild(toast); setTimeout(() => toast.classList.add('show'), 100); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 500); }, 4000); }
+                success(message, title) { this.show(message, 'success', title); }
+                error(message, title) { this.show(message, 'error', title); }
+            }
+            const toastManager = new ToastManager();
 
-                days.forEach((day, i) => {
-                    let rowHtml = `<tr class="border-b"><td class="p-3 font-bold bg-gray-50">${dayNames[i]}</td>`;
-                    for (let j = 0; j < 7; j++) {
-                        const period = j + 1;
-                        const lesson = weekData.lessons?.[day]?.[period] || {};
-                        const subject = lesson.subject || '';
-                        const isComplete = lesson.completed && lesson.title;
-                        
-                        let cellHtml = '';
-                        if (!subject && isTeacherAuthenticated) {
-                            cellHtml = `<div class="card cursor-pointer h-20 flex items-center justify-center p-3 border-2 border-dashed border-blue-400 bg-blue-50 rounded text-center" onclick="openModal('${day}',${period})">+ إضافة</div>`;
-                        } else if (!subject) {
-                            cellHtml = `<div class="p-3 bg-gray-100 rounded text-center text-gray-400 h-20 flex items-center justify-center">فارغ</div>`;
-                        } else {
-                            cellHtml = `<div class="card cursor-pointer h-20 p-3 ${isComplete ? 'bg-main' : 'bg-gray-400'} text-white rounded text-center flex flex-col justify-center" onclick="openModal('${day}',${period},'${subject}')"><span>${subject}</span><small class="opacity-80">${lesson.title || 'بدون محتوى'}</small></div>`;
+            // --- Core Functions ---
+            async function renderSchedule() {
+                elements.currentWeekDisplay.textContent = `الأسبوع ${currentWeek + 1}`;
+                const docId = `${currentGrade}-${currentSection}-week${currentWeek}`;
+                const docRef = db.collection('schedules').doc(docId);
+                try {
+                    const doc = await docRef.get();
+                    const weekData = doc.exists ? doc.data() : { lessons: {} };
+                    const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday'];
+                    const dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+                    elements.scheduleBody.innerHTML = '';
+                    days.forEach((day, i) => {
+                        let rowHtml = `<tr class="border-b"><td class="p-3 font-bold bg-gray-50">${dayNames[i]}</td>`;
+                        for (let j = 0; j < 7; j++) {
+                            const period = j + 1;
+                            const lesson = weekData.lessons?.[day]?.[period] || {};
+                            const subject = lesson.subject || '';
+                            const isComplete = lesson.completed && lesson.title;
+                            let cellHtml = !subject && isTeacherAuthenticated ? `<div class="card cursor-pointer h-20 flex items-center justify-center p-3 border-2 border-dashed border-blue-400 bg-blue-50 rounded text-center" onclick="openModal('${day}',${period})">+ إضافة</div>` : !subject ? `<div class="p-3 bg-gray-100 rounded text-center text-gray-400 h-20 flex items-center justify-center">فارغ</div>` : `<div class="card cursor-pointer h-20 p-3 ${isComplete ? 'bg-main' : 'bg-gray-400'} text-white rounded text-center flex flex-col justify-center" onclick="openModal('${day}',${period},'${subject}')"><span>${subject}</span><small class="opacity-80">${lesson.title || 'بدون محتوى'}</small></div>`;
+                            rowHtml += `<td class="p-1">${cellHtml}</td>`;
                         }
-                        rowHtml += `<td class="p-1">${cellHtml}</td>`;
-                    }
-                    rowHtml += `</tr>`;
-                    scheduleBody.innerHTML += rowHtml;
-                });
-            } catch (error) { toastManager.error('فشل في تحميل الجدول الدراسي.'); }
-        }
+                        rowHtml += `</tr>`;
+                        elements.scheduleBody.innerHTML += rowHtml;
+                    });
+                } catch (error) { toastManager.error('فشل في تحميل الجدول الدراسي.'); }
+            }
 
-        function listenForAnnouncements() {
-            if (unsubscribeAnnouncements) unsubscribeAnnouncements();
-            unsubscribeAnnouncements = db.collection('announcements').orderBy('createdAt', 'desc')
-                .onSnapshot(snapshot => {
-                    const list = document.getElementById('announcementsList');
-                    list.innerHTML = '';
-                    if (snapshot.empty) { list.innerHTML = '<div class="text-gray-500 text-center p-4">لا توجد إعلانات حاليًا</div>'; return; }
+            function listenForAnnouncements() {
+                if (unsubscribeAnnouncements) unsubscribeAnnouncements();
+                unsubscribeAnnouncements = db.collection('announcements').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+                    elements.announcementsList.innerHTML = '';
+                    if (snapshot.empty) { elements.announcementsList.innerHTML = '<div class="text-gray-500 text-center p-4">لا توجد إعلانات حاليًا</div>'; return; }
                     snapshot.forEach(doc => {
                         const announcement = { id: doc.id, ...doc.data() };
                         const date = announcement.createdAt?.toDate().toLocaleDateString('ar-SA') || '';
@@ -134,103 +163,118 @@
                         el.className = 'bg-blue-50 border-l-4 border-blue-400 p-4 mb-2';
                         let teacherButtons = isTeacherAuthenticated ? `<div class="mt-2 space-x-2 space-x-reverse"><button onclick="openAnnouncementModal(true, '${announcement.id}')" class="text-xs bg-yellow-500 text-white px-2 py-1 rounded">تعديل</button><button onclick="deleteAnnouncement('${announcement.id}')" class="text-xs bg-red-500 text-white px-2 py-1 rounded">حذف</button></div>` : '';
                         el.innerHTML = `<h4 class="font-bold">${announcement.title}</h4><p class="mt-1">${announcement.content}</p><small class="text-gray-500 mt-2 block">${date}</small>${teacherButtons}`;
-                        list.appendChild(el);
+                        elements.announcementsList.appendChild(el);
                     });
                 }, error => { toastManager.error('فشل في تحميل الإعلانات.'); });
-        }
-
-        function login() {
-            const passwordInput = document.getElementById('teacherPassword');
-            if (passwordInput.value === '13542') {
-                isTeacherAuthenticated = true;
-                currentRole = 'teacher';
-                document.getElementById('userRole').value = 'teacher';
-                document.getElementById('teacherLoginModal').classList.add('hidden');
-                passwordInput.value = '';
-                updateUI();
-                toastManager.success('تم تسجيل الدخول بنجاح!');
-            } else { document.getElementById('passwordError').classList.remove('hidden'); }
-        }
-
-        async function openModal(day, period, subject = '') {
-            const docId = `${currentGrade}-${currentSection}-week${currentWeek}`;
-            const doc = await db.collection('schedules').doc(docId).get();
-            const lesson = doc.exists ? (doc.data().lessons?.[day]?.[period] || {}) : {};
-            const modal = document.getElementById('lessonModal');
-            const modalContent = document.getElementById('modalContent');
-            document.getElementById('modalTitle').textContent = subject ? `${subject} - الحصة ${period}` : 'إضافة حصة جديدة';
-
-            if (isTeacherAuthenticated) {
-                modalContent.innerHTML = `<div class="space-y-4"><div><label class="block text-sm font-bold">اسم المادة*</label><input type="text" id="subjectName" class="w-full p-2 border rounded" value="${subject}" required></div><div><label class="block text-sm font-bold">عنوان الحصة*</label><input type="text" id="lessonTitle" class="w-full p-2 border rounded" value="${lesson.title || ''}" required></div><div><label class="block text-sm font-bold">محتوى الحصة</label><textarea id="lessonContent" rows="3" class="w-full p-2 border rounded">${lesson.content || ''}</textarea></div><div class="flex space-x-2 space-x-reverse"><button id="saveLessonBtn" class="flex-1 bg-green-500 text-white p-2 rounded">حفظ</button><button onclick="document.getElementById('lessonModal').classList.add('hidden')" class="flex-1 bg-gray-500 text-white p-2 rounded">إلغاء</button></div></div>`;
-                document.getElementById('saveLessonBtn').onclick = () => saveLesson(day, period);
-            } else {
-                 modalContent.innerHTML = lesson.completed ? `<div class="space-y-3"><div><h4 class="font-bold">عنوان الحصة:</h4><p class="bg-gray-100 p-2 rounded">${lesson.title}</p></div><div><h4 class="font-bold">محتوى الحصة:</h4><p class="bg-gray-100 p-2 rounded">${lesson.content || 'لا يوجد'}</p></div></div>` : `<p class="text-center text-gray-500">لم يتم إضافة محتوى للحصة بعد.</p>`;
             }
-            modal.classList.remove('hidden');
-        }
 
-        async function saveLesson(day, period) {
-            const subject = document.getElementById('subjectName').value.trim();
-            const title = document.getElementById('lessonTitle').value.trim();
-            const content = document.getElementById('lessonContent').value.trim();
-            if (!subject || !title) { toastManager.error('يرجى ملء حقلي المادة والعنوان.'); return; }
-            const lessonData = { subject, title, content, completed: true };
-            const docId = `${currentGrade}-${currentSection}-week${currentWeek}`;
-            try {
-                await db.collection('schedules').doc(docId).set({ lessons: { [day]: { [period]: lessonData } } }, { merge: true });
-                document.getElementById('lessonModal').classList.add('hidden');
-                await renderSchedule();
-                toastManager.success('تم حفظ الحصة بنجاح!');
-            } catch (error) { toastManager.error('فشل حفظ الحصة.'); }
-        }
-        
-        async function openAnnouncementModal(isEditing = false, docId = null) {
-            const modal = document.getElementById('announcementModal');
-            const titleInput = document.getElementById('announcementTitle');
-            const contentInput = document.getElementById('announcementContent');
-            const saveBtn = document.getElementById('saveAnnouncement');
-            if (isEditing && docId) {
-                const doc = await db.collection('announcements').doc(docId).get();
-                if (doc.exists) { const data = doc.data(); titleInput.value = data.title; contentInput.value = data.content; document.getElementById('announcementModalTitle').textContent = 'تعديل إعلان'; saveBtn.onclick = () => updateAnnouncement(docId); }
-            } else { titleInput.value = ''; contentInput.value = ''; document.getElementById('announcementModalTitle').textContent = 'إضافة إعلان جديد'; saveBtn.onclick = saveNewAnnouncement; }
-            modal.classList.remove('hidden');
-        }
-        
-        async function saveNewAnnouncement() { /* ... Logic from previous version ... */ }
-        async function updateAnnouncement(docId) { /* ... Logic from previous version ... */ }
-        async function deleteAnnouncement(docId) { /* ... Logic from previous version ... */ }
+            function login() {
+                if (elements.passwordInput.value === '13542') {
+                    isTeacherAuthenticated = true;
+                    currentRole = 'teacher';
+                    elements.userRole.value = 'teacher';
+                    elements.loginModal.classList.add('hidden');
+                    elements.passwordInput.value = '';
+                    elements.passwordError.classList.add('hidden');
+                    updateUI();
+                    toastManager.success('تم تسجيل الدخول بنجاح!');
+                } else { elements.passwordError.classList.remove('hidden'); }
+            }
 
-        function updateUI() {
-            document.getElementById('addAnnouncementBtn').classList.toggle('hidden', !isTeacherAuthenticated);
-            renderSchedule();
-            listenForAnnouncements();
-        }
+            window.openModal = async (day, period, subject = '') => {
+                const docId = `${currentGrade}-${currentSection}-week${currentWeek}`;
+                const doc = await db.collection('schedules').doc(docId).get();
+                const lesson = doc.exists ? (doc.data().lessons?.[day]?.[period] || {}) : {};
+                elements.modalTitle.textContent = subject ? `${subject} - الحصة ${period}` : 'إضافة حصة جديدة';
+                if (isTeacherAuthenticated) {
+                    elements.modalContent.innerHTML = `<div class="space-y-4"><div><label class="block text-sm font-bold">اسم المادة*</label><input type="text" id="subjectName" class="w-full p-2 border rounded" value="${subject}" required></div><div><label class="block text-sm font-bold">عنوان الحصة*</label><input type="text" id="lessonTitle" class="w-full p-2 border rounded" value="${lesson.title || ''}" required></div><div><label class="block text-sm font-bold">محتوى الحصة</label><textarea id="lessonContent" rows="3" class="w-full p-2 border rounded">${lesson.content || ''}</textarea></div><div class="flex space-x-2 space-x-reverse"><button id="saveLessonBtn" class="flex-1 bg-green-500 text-white p-2 rounded">حفظ</button><button onclick="document.getElementById('lessonModal').classList.add('hidden')" class="flex-1 bg-gray-500 text-white p-2 rounded">إلغاء</button></div></div>`;
+                    document.getElementById('saveLessonBtn').onclick = () => saveLesson(day, period);
+                } else {
+                    elements.modalContent.innerHTML = lesson.completed ? `<div class="space-y-3"><div><h4 class="font-bold">عنوان الحصة:</h4><p class="bg-gray-100 p-2 rounded">${lesson.title}</p></div><div><h4 class="font-bold">محتوى الحصة:</h4><p class="bg-gray-100 p-2 rounded">${lesson.content || 'لا يوجد'}</p></div></div>` : `<p class="text-center text-gray-500">لم يتم إضافة محتوى للحصة بعد.</p>`;
+                }
+                elements.lessonModal.classList.remove('hidden');
+            };
 
-        // --- Event Listeners Setup ---
-        // **** THIS IS THE KEY CHANGE ****
-        document.addEventListener('DOMContentLoaded', () => {
-            // It's now safe to add listeners because the whole page is loaded.
-            document.getElementById('userRole').addEventListener('change', (e) => {
+            async function saveLesson(day, period) {
+                const subject = document.getElementById('subjectName').value.trim();
+                const title = document.getElementById('lessonTitle').value.trim();
+                const content = document.getElementById('lessonContent').value.trim();
+                if (!subject || !title) { toastManager.error('يرجى ملء حقلي المادة والعنوان.'); return; }
+                const lessonData = { subject, title, content, completed: true };
+                const docId = `${currentGrade}-${currentSection}-week${currentWeek}`;
+                try {
+                    await db.collection('schedules').doc(docId).set({ lessons: { [day]: { [period]: lessonData } } }, { merge: true });
+                    elements.lessonModal.classList.add('hidden');
+                    await renderSchedule();
+                    toastManager.success('تم حفظ الحصة بنجاح!');
+                } catch (error) { toastManager.error('فشل حفظ الحصة.'); }
+            }
+
+            window.openAnnouncementModal = async (isEditing = false, docId = null) => {
+                if (isEditing && docId) {
+                    const doc = await db.collection('announcements').doc(docId).get();
+                    if (doc.exists) { const data = doc.data(); elements.announcementTitleInput.value = data.title; elements.announcementContentInput.value = data.content; elements.announcementModalTitle.textContent = 'تعديل إعلان'; elements.saveAnnouncementBtn.onclick = () => updateAnnouncement(docId); }
+                } else { elements.announcementTitleInput.value = ''; elements.announcementContentInput.value = ''; elements.announcementModalTitle.textContent = 'إضافة إعلان جديد'; elements.saveAnnouncementBtn.onclick = saveNewAnnouncement; }
+                elements.announcementModal.classList.remove('hidden');
+            };
+
+            async function saveNewAnnouncement() {
+                const title = elements.announcementTitleInput.value.trim();
+                const content = elements.announcementContentInput.value.trim();
+                if (!title || !content) { toastManager.error('يرجى ملء جميع الحقول'); return; }
+                try {
+                    await db.collection('announcements').add({ title, content, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+                    elements.announcementModal.classList.add('hidden');
+                    toastManager.success('تم نشر الإعلان بنجاح!');
+                } catch { toastManager.error('فشل في حفظ الإعلان.'); }
+            }
+            
+            async function updateAnnouncement(docId) {
+                const title = elements.announcementTitleInput.value.trim();
+                const content = elements.announcementContentInput.value.trim();
+                if (!title || !content) { toastManager.error('يرجى ملء جميع الحقول'); return; }
+                try {
+                    await db.collection('announcements').doc(docId).update({ title, content });
+                    elements.announcementModal.classList.add('hidden');
+                    toastManager.success('تم تحديث الإعلان بنجاح!');
+                } catch { toastManager.error('فشل في تحديث الإعلان.'); }
+            }
+
+            window.deleteAnnouncement = async (docId) => {
+                if (confirm('هل أنت متأكد من حذف هذا الإعلان؟')) {
+                    try {
+                        await db.collection('announcements').doc(docId).delete();
+                        toastManager.success('تم حذف الإعلان بنجاح.');
+                    } catch { toastManager.error('فشل في حذف الإعلان.'); }
+                }
+            };
+
+            function updateUI() {
+                elements.addAnnouncementBtn.classList.toggle('hidden', !isTeacherAuthenticated);
+                renderSchedule();
+                listenForAnnouncements();
+            }
+
+            // --- Event Listeners Setup ---
+            elements.userRole.addEventListener('change', (e) => {
                 if (e.target.value === 'teacher' && !isTeacherAuthenticated) {
-                    document.getElementById('teacherLoginModal').classList.remove('hidden');
+                    elements.loginModal.classList.remove('hidden');
                     e.target.value = 'parent';
                 } else { currentRole = e.target.value; updateUI(); }
             });
-            document.getElementById('gradeSelect').addEventListener('change', (e) => { currentGrade = e.target.value; renderSchedule(); });
-            document.getElementById('sectionSelect').addEventListener('change', (e) => { currentSection = e.target.value; renderSchedule(); });
-            document.getElementById('prevWeek').addEventListener('click', () => { if (currentWeek > 0) { currentWeek--; renderSchedule(); } });
-            document.getElementById('nextWeek').addEventListener('click', () => { currentWeek++; renderSchedule(); });
+            elements.gradeSelect.addEventListener('change', (e) => { currentGrade = e.target.value; renderSchedule(); });
+            elements.sectionSelect.addEventListener('change', (e) => { currentSection = e.target.value; renderSchedule(); });
+            elements.prevWeekBtn.addEventListener('click', () => { if (currentWeek > 0) { currentWeek--; renderSchedule(); } });
+            elements.nextWeekBtn.addEventListener('click', () => { currentWeek++; renderSchedule(); });
+            elements.closeModalBtn.addEventListener('click', () => elements.lessonModal.classList.add('hidden'));
+            elements.confirmLoginBtn.addEventListener('click', login);
+            elements.cancelLoginBtn.addEventListener('click', () => elements.loginModal.classList.add('hidden'));
+            elements.passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') login(); });
+            elements.addAnnouncementBtn.addEventListener('click', () => openAnnouncementModal(false));
+            elements.closeAnnouncementModalBtn.addEventListener('click', () => elements.announcementModal.classList.add('hidden'));
+            elements.cancelAnnouncementBtn.addEventListener('click', () => elements.announcementModal.classList.add('hidden'));
             
-            document.getElementById('closeModal').addEventListener('click', () => document.getElementById('lessonModal').classList.add('hidden'));
-            document.getElementById('confirmLogin').addEventListener('click', login);
-            document.getElementById('cancelLogin').addEventListener('click', () => document.getElementById('teacherLoginModal').classList.add('hidden'));
-            document.getElementById('teacherPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') login(); });
-
-            document.getElementById('addAnnouncementBtn').addEventListener('click', () => openAnnouncementModal(false));
-            document.getElementById('closeAnnouncementModal').addEventListener('click', () => document.getElementById('announcementModal').classList.add('hidden'));
-            document.getElementById('cancelAnnouncement').addEventListener('click', () => document.getElementById('announcementModal').classList.add('hidden'));
-            
-            // Initial load of data
+            // Initial load
             updateUI();
         });
     </script>
