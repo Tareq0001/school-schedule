@@ -1,12 +1,77 @@
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الجدول الدراسي - مواهب التربية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { font-family: system-ui, -apple-system, sans-serif; }
+        .bg-main { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+        .card { transition: transform 0.2s; }
+        .card:hover { transform: translateY(-2px); }
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
+        .toast { background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-bottom: 10px; padding: 16px; min-width: 300px; display: flex; align-items: center; gap: 10px; border-left: 4px solid; opacity: 0; transform: translateX(100%); transition: all 0.3s ease-in-out; }
+        .toast.show { opacity: 1; transform: translateX(0); }
+        .toast.success { border-left-color: #10b981; }
+        .toast.error { border-left-color: #ef4444; }
+        .toast-icon { font-size: 20px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
 
+    <header class="bg-main text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6-Vq-W1kYDrap9R9evZFp4qMiFYqXT6hk3A&s" alt="شعار وزارة التعليم" class="h-12 w-12 bg-white rounded-full p-1">
+                        <img src="https://mwahib.edu.sa/wp-content/uploads/2022/02/Artboard-%D9%A1.png" alt="شعار مواهب التربية" class="h-12 w-auto bg-white rounded p-1">
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">الجدول الدراسي</h1>
+                        <p class="text-blue-100">مواهب التربية -متوسطة أبها الأهلية</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <button id="prevWeek" class="bg-white bg-opacity-20 hover:bg-opacity-30 p-2 rounded">←</button>
+                    <div id="currentWeek" class="text-center font-bold">الأسبوع ...</div>
+                    <button id="nextWeek" class="bg-white bg-opacity-20 hover:bg-opacity-30 p-2 rounded">→</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-4">
+        <div class="bg-white rounded-lg shadow p-4 mb-4">
+            <div class="grid grid-cols-3 gap-4">
+                <select id="userRole" class="p-2 border rounded"><option value="parent">ولي أمر</option><option value="teacher">معلم</option></select>
+                <select id="gradeSelect" class="p-2 border rounded"><option value="1">الأول متوسط</option><option value="2">الثاني متوسط</option><option value="3">الثالث متوسط</option></select>
+                <select id="sectionSelect" class="p-2 border rounded"><option value="أ">أ</option><option value="ب">ب</option><option value="ج">ج</option><option value="د">د</option></select>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow overflow-x-auto">
+            <table class="w-full min-w-[600px]"><thead class="bg-main text-white"><tr><th class="p-3 text-right">اليوم</th><th class="p-3">الأولى</th><th class="p-3">الثانية</th><th class="p-3">الثالثة</th><th class="p-3">الرابعة</th><th class="p-3">الخامسة</th><th class="p-3">السادسة</th><th class="p-3">السابعة</th></tr></thead><tbody id="scheduleBody"><tr><td colspan="8" class="text-center p-8">جاري التحميل...</td></tr></tbody></table>
+        </div>
+        <div class="bg-white rounded-lg shadow p-4 mb-4 mt-4">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-bold">📢 الإعلانات</h3><button id="addAnnouncementBtn" class="hidden bg-main text-white px-4 py-2 rounded">+ إضافة</button></div>
+            <div id="announcementsList"><div class="text-gray-500 text-center p-4">جاري تحميل الإعلانات...</div></div>
+        </div>
+    </div>
+    
+    <div id="lessonModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"><div class="bg-white rounded-lg max-w-2xl w-full"><div class="bg-main text-white p-4 flex justify-between items-center"><h2 id="modalTitle" class="font-bold">تفاصيل الحصة</h2><button id="closeModal" class="text-white">✕</button></div><div class="p-4" id="modalContent"></div></div></div>
+    <div id="teacherLoginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"><div class="bg-white rounded-lg max-w-sm w-full"><div class="bg-main text-white p-4 text-center"><h2 class="font-bold">تسجيل دخول المعلم</h2></div><div class="p-4 space-y-4"><input type="password" id="teacherPassword" class="w-full p-2 border rounded" placeholder="كلمة المرور"><div id="passwordError" class="hidden text-red-600 text-sm">كلمة المرور غير صحيحة.</div><div class="flex space-x-2 space-x-reverse"><button id="confirmLogin" class="flex-1 bg-main text-white p-2 rounded">دخول</button><button id="cancelLogin" class="flex-1 bg-gray-500 text-white p-2 rounded">إلغاء</button></div></div></div></div>
+    <div id="announcementModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"><div class="bg-white rounded-lg max-w-md w-full"><div class="bg-main text-white p-4 flex justify-between items-center"><h2 id="announcementModalTitle" class="font-bold">إضافة إعلان</h2><button id="closeAnnouncementModal" class="text-white">✕</button></div><div class="p-4 space-y-4"><div><label class="block text-sm font-bold">العنوان*</label><input type="text" id="announcementTitle" class="w-full p-2 border rounded"></div><div><label class="block text-sm font-bold">المحتوى*</label><textarea id="announcementContent" rows="4" class="w-full p-2 border rounded"></textarea></div><div class="flex space-x-2 space-x-reverse"><button id="saveAnnouncement" class="flex-1 bg-green-500 text-white p-2 rounded">حفظ</button><button id="cancelAnnouncement" class="flex-1 bg-gray-500 text-white p-2 rounded">إلغاء</button></div></div></div></div>
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script>
       const firebaseConfig = {
-        apiKey: "AIzaSyA_WVB2hbJABjRdIAVLc-1b4BDqFjnI-zE", // مفتاحك
+        apiKey: "AIzaSyA_WVB2hbJABjRdIAVLc-1b4BDqFjnI-zE",
         authDomain: "mawaheb-schedule.firebaseapp.com",
         projectId: "mawaheb-schedule",
-        storageBucket: "mawaheb-schedule.firebasestorage.app", // تأكد من اسم الـ storageBucket
+        storageBucket: "mawaheb-schedule.firebasestorage.app",
         messagingSenderId: "831401201099",
         appId: "1:831401201099:web:a8518443249b1bcf2aba4e"
       };
@@ -16,7 +81,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- تعديل الأسبوع التلقائي ---
+            
+            // --- بداية تعديل عداد الأسابيع التلقائي ---
             const schoolStartDate = new Date('2025-08-22T00:00:00');
             function getCurrentSchoolWeek(startDate) {
                 const today = new Date();
@@ -24,10 +90,11 @@
                 const weeksSinceStart = msSinceStart / (1000 * 60 * 60 * 24 * 7);
                 return Math.floor(weeksSinceStart);
             }
+            // --- نهاية تعديل عداد الأسابيع التلقائي ---
 
             // Global State
             let currentGrade = '1', currentSection = 'أ', currentRole = 'parent';
-            let currentWeek = getCurrentSchoolWeek(schoolStartDate);
+            let currentWeek = getCurrentSchoolWeek(schoolStartDate); // استدعاء الدالة لتحديد الأسبوع تلقائياً
             
             let isTeacherAuthenticated = false;
             let unsubscribeAnnouncements = null;
@@ -114,7 +181,6 @@
                 }, error => { toastManager.error('فشل في تحميل الإعلانات.'); });
             }
 
-            // *** دالة تسجيل الدخول القديمة كما هي ***
             function login() {
                 if (elements.passwordInput.value === '13542') {
                     isTeacherAuthenticated = true;
@@ -225,6 +291,5 @@
             updateUI();
         });
     </script>
-    ```
-
-الآن انسخ هذا الكود بالكامل والصقه بدلًا من كل أكواد السكربت في ملفك، وسيتم حل مشكلة الصفحة البيضاء ويعود الموقع للعمل كما كان، مع ميزة تحديث الأسبوع تلقائيًا. ✅
+</body>
+</html>
