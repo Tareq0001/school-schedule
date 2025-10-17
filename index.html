@@ -1,12 +1,23 @@
-<script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyA_WVB2hbJABjRdIAVLc-1b4BDqFjnI-zE", // مفتاحك
+        authDomain: "mawaheb-schedule.firebaseapp.com",
+        projectId: "mawaheb-schedule",
+        storageBucket: "mawaheb-schedule.firebasestorage.app", // تأكد من اسم الـ storageBucket
+        messagingSenderId: "831401201099",
+        appId: "1:831401201099:web:a8518443249b1bcf2aba4e"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+    </script>
+
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- بداية التعديل ---
-
-            // 1. تحديد تاريخ بداية "افتراضي" يجعلنا في الأسبوع التاسع اليوم
-            // تم حساب هذا التاريخ ليتوافق مع طلبك (اليوم 17 أكتوبر 2025 هو في الأسبوع التاسع)
+            // --- تعديل الأسبوع التلقائي ---
             const schoolStartDate = new Date('2025-08-22T00:00:00');
-
-            // 2. دالة لحساب الأسبوع الحالي بناءً على تاريخ البداية
             function getCurrentSchoolWeek(startDate) {
                 const today = new Date();
                 const msSinceStart = today - startDate;
@@ -16,15 +27,12 @@
 
             // Global State
             let currentGrade = '1', currentSection = 'أ', currentRole = 'parent';
-            // 3. استدعاء الدالة لتحديد الأسبوع الحالي تلقائياً
             let currentWeek = getCurrentSchoolWeek(schoolStartDate);
             
-            // --- نهاية التعديل ---
-
             let isTeacherAuthenticated = false;
             let unsubscribeAnnouncements = null;
 
-            // DOM Elements (الكود الباقي كما هو بدون تغيير)
+            // DOM Elements
             const elements = {
                 userRole: document.getElementById('userRole'),
                 gradeSelect: document.getElementById('gradeSelect'),
@@ -106,6 +114,7 @@
                 }, error => { toastManager.error('فشل في تحميل الإعلانات.'); });
             }
 
+            // *** دالة تسجيل الدخول القديمة كما هي ***
             function login() {
                 if (elements.passwordInput.value === '13542') {
                     isTeacherAuthenticated = true;
@@ -216,3 +225,6 @@
             updateUI();
         });
     </script>
+    ```
+
+الآن انسخ هذا الكود بالكامل والصقه بدلًا من كل أكواد السكربت في ملفك، وسيتم حل مشكلة الصفحة البيضاء ويعود الموقع للعمل كما كان، مع ميزة تحديث الأسبوع تلقائيًا. ✅
